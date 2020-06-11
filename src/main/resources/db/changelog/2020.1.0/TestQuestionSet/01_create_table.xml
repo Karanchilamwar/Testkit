@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<databaseChangeLog  
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">  
+
+
+
+<changeSet id="1" author="nit162">
+   <createTable tableName="question_set">
+   
+        <column name="id" type="int"  autoIncrement="true">
+          <constraints nullable="false"  primaryKey="true"/>
+        </column>
+        
+        
+        
+        <column name="section_id" type="int">
+            <constraints nullable="false" referencedTableName="test_section" referencedColumnNames="id" deleteCascade="true"  foreignKeyName="questionset_section_id_fk"/>
+        </column>
+          
+          
+        <column name="question_id" type="int">
+              <constraints nullable="false" referencedTableName="Question" referencedColumnNames="id" foreignKeyName="questionset_squestion_id_fk"/>
+        </column>
+           
+   
+     </createTable>
+</changeSet>
+   
+   
+   
+  
+</databaseChangeLog> 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<databaseChangeLog  
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">  
+
+    <include file="db/changelog/2020.1.0/user/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/user/02_modify_add_columns.xml"/>
+    <include file="db/changelog/2020.1.0/Candidate/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/admin/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/Resources/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/Question/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/Option/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/Test/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/TestSection/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/TestQuestionSet/01_create_table.xml"/>
+    <include file="db/changelog/2020.1.0/TestSchedular/01_create_table.xml"/>
+      <include file="db/changelog/2020.1.0/TestSchedular/01_create_table.xml"/>
+  <include file="db/changelog/2020.1.0/QuestionHasOption/01_create_table.xml"/>
+  <include file="db/changelog/2020.1.0/OptionHasQuestion/01_create_table.xml"/>
+</databaseChangeLog> 
