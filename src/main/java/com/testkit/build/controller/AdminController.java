@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testkit.build.dto.AdminDTO;
 import com.testkit.build.dto.AdminInDTO;
-import com.testkit.build.exception.UserAvailableException;
 import com.testkit.build.services.AdminService;
 
 @RestController()
@@ -24,7 +23,7 @@ public class AdminController {
 	AdminService service;
 
 	@PostMapping(value = "/addadmin")
-	public AdminDTO addUser(@RequestBody AdminInDTO adminIndto) throws UserAvailableException {
+	public AdminDTO addUser(@RequestBody AdminInDTO adminIndto) {
 		return service.saveAdmin(adminIndto);
 	}
 

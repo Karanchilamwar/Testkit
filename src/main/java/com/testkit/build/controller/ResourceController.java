@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
-import com.testkit.build.exception.UserAvailableException;
 import com.testkit.build.services.ResourceService;
 
 @RestController()
@@ -24,7 +23,7 @@ public class ResourceController {
 	ResourceService service;
 
 	@PostMapping(value = "/addresource")
-	public ResourceDTO addResource(@RequestBody ResourceInDTO candidateIndto) throws UserAvailableException {
+	public ResourceDTO addResource(@RequestBody ResourceInDTO candidateIndto) {
 		return service.saveResource(candidateIndto);
 	}
 

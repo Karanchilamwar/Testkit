@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,5 +20,6 @@ import lombok.EqualsAndHashCode;
 public class ResourceEntity extends UserEntity {
 
 	@Column(name = "registration_date")
+	@Temporal(TemporalType.DATE)
 	private Date registrationDate;
 }
