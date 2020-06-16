@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.testkit.build.common.dto.DeveloperMessage;
+import com.testkit.build.common.dto.ErrorMessage;
+import com.testkit.build.common.enums.ErrorCode;
+import com.testkit.build.common.exception.QuestionAlreadyExistException;
+import com.testkit.build.common.exception.QuestionNotFoundException;
 import com.testkit.build.dao.QuestionRepository;
 import com.testkit.build.dto.OptionUpdateDTO;
 import com.testkit.build.dto.QuestionDTO;
@@ -15,8 +21,8 @@ import com.testkit.build.dto.QuestionInDTO;
 import com.testkit.build.dto.QuestionUpdateDTO;
 import com.testkit.build.entity.OptionEntity;
 import com.testkit.build.entity.QuestionEntity;
-import com.testkit.build.exception.QuestionAlreadyPresent;
 import com.testkit.build.mapper.QuestionMapper;
+import com.testkit.build.predicates.QuestionPredicate;
 import com.testkit.build.services.QuestionService;
 
 @Service
@@ -45,14 +51,18 @@ public class QuestionServiceImpl implements QuestionService {
 	public QuestionDTO updateQuestion(QuestionUpdateDTO questionUpdateDTO) {
 		QuestionDTO questionDTO = null;
 		Optional<QuestionEntity> optionalQuestionEntity = questionRepository.findById(questionUpdateDTO.getId());
-		if (optionalQuestionEntity.isPresent()) {
-			QuestionEntity questionEntity = optionalQuestionEntity.get();
-			questionEntity = this.updateQuestionEntity(questionUpdateDTO, questionEntity);
-			questionEntity = questionRepository.save(questionEntity);
-			questionEntity
-					.setOptionEntityList(updateOptionEntity(questionUpdateDTO.getOptionUpdateDTOs(), questionEntity));
-			questionDTO = this.createQuestionDTO(questionEntity);
+		if (!optionalQuestionEntity.isPresent()) {
+			throw new QuestionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
+							"No Question available in the database with ID{" + questionUpdateDTO.getId() + "}")));
 		}
+
+		QuestionEntity questionEntity = optionalQuestionEntity.get();
+		questionEntity = this.updateQuestionEntity(questionUpdateDTO, questionEntity);
+		questionEntity = questionRepository.save(questionEntity);
+		questionEntity.setOptionEntityList(updateOptionEntity(questionUpdateDTO.getOptionUpdateDTOs(), questionEntity));
+		questionDTO = this.createQuestionDTO(questionEntity);
+
 		return questionDTO;
 	}
 
@@ -60,7 +70,11 @@ public class QuestionServiceImpl implements QuestionService {
 	public List<QuestionDTO> findQuestions() {
 		List<QuestionEntity> questionEntityList = new ArrayList<QuestionEntity>();
 		questionRepository.findAll().forEach(questionEntityList::add);
-
+		if (questionEntityList.isEmpty()) {
+			throw new QuestionNotFoundException(
+					new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(new DeveloperMessage(
+							ErrorCode.QUESTION_NOT_FOUND, "No Questiona available in the database with ID")));
+		}
 		return createQuestionDTOList(questionEntityList);
 	}
 
@@ -69,9 +83,23 @@ public class QuestionServiceImpl implements QuestionService {
 		QuestionDTO questionDTO = null;
 		Optional<QuestionEntity> optionalQuestionEntity = questionRepository.findById(questionId);
 		if (optionalQuestionEntity.isPresent()) {
-			questionDTO = createQuestionDTO(optionalQuestionEntity.get());
+			throw new QuestionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
+							"No Question available in the database with ID{" + questionId + "}")));
 		}
+		questionDTO = createQuestionDTO(optionalQuestionEntity.get());
 		return questionDTO;
+	}
+
+	@Override
+	public boolean deleteQuestion(int questionId) {
+		if (findQuestionById(questionId) != null) {
+			throw new QuestionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
+							"No Question available in the database with ID{" + questionId + "}")));
+		}
+		questionRepository.deleteById(questionId);
+		return true;
 	}
 
 	private QuestionEntity createQuestionEntity(QuestionInDTO questionInDTO) {
@@ -105,16 +133,25 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	private boolean validateQuestion(QuestionInDTO questionInDTO) {
-		QuestionEntity questionEntity = questionRepository
-				.findQuestionEntityByQuestionTextAndType(questionInDTO.getQuestionText(), questionInDTO.getType());
+		QuestionEntity questionEntity = findQuestionEntityByQuestionTextAndType(questionInDTO.getQuestionText(),
+				questionInDTO.getType());
 		if (questionEntity != null) {
-			try {
-				throw new QuestionAlreadyPresent();
-			} catch (QuestionAlreadyPresent questionAlreadyPresent) {
-
-			}
+			throw new QuestionAlreadyExistException(new ErrorMessage(ErrorCode.BAD_REQUEST)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.DUPLICATE_QUESTION_ENTITY,
+							"Question entity with same text contain and type already exists")));
 		}
 		return true;
+	}
+
+	private QuestionEntity findQuestionEntityByQuestionTextAndType(String questionText, String type) {
+		QuestionEntity questionEntity = null;
+		BooleanExpression questionTextExp = QuestionPredicate.questionTextEq(questionText);
+		BooleanExpression questionTypeExp = QuestionPredicate.questionTypeEq(type);
+		Optional<QuestionEntity> optional = questionRepository.findOne(questionTextExp.and(questionTypeExp));
+		if (optional.isPresent()) {
+			questionEntity = optional.get();
+		}
+		return questionEntity;
 	}
 
 }

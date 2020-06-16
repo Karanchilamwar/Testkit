@@ -9,7 +9,7 @@ import com.testkit.build.dto.OptionInDTO;
 import com.testkit.build.dto.OptionUpdateDTO;
 import com.testkit.build.entity.OptionEntity;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface OptionMapper {
 
 	// OptionEntity optionInDTOToOptionEntity(OptionInDTO optionInDTO);

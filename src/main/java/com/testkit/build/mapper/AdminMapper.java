@@ -1,5 +1,6 @@
 package com.testkit.build.mapper;
 
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,9 +11,10 @@ import com.testkit.build.dto.AdminDTO;
 import com.testkit.build.dto.AdminInDTO;
 import com.testkit.build.entity.AdminEntity;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface AdminMapper {
 
+	@InheritConfiguration
 	@Mapping(source = "userName", target = "userName")
 	@Mapping(source = "userEmail", target = "userEmail")
 	@Mapping(source = "userPassword", target = "userPassword")
@@ -20,6 +22,7 @@ public interface AdminMapper {
 	@Mapping(source = "adminLevel", target = "adminLevel")
 	AdminEntity AdminInDTOToAdmin(AdminInDTO adminInDTO);
 
+	@InheritConfiguration
 	@Mapping(source = "userName", target = "userName")
 	@Mapping(source = "userEmail", target = "userEmail")
 	@Mapping(source = "userMobile", target = "userMobile")

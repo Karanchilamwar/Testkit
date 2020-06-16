@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import com.testkit.build.enums.UserType;
+import com.testkit.build.common.enums.UserType;
 
 import lombok.Data;
 

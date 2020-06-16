@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.testkit.build.common.dto.DeveloperMessage;
+import com.testkit.build.common.dto.ErrorMessage;
+import com.testkit.build.common.enums.ErrorCode;
+import com.testkit.build.common.exception.OptionAlreadyExistException;
+import com.testkit.build.common.exception.OptionNotFoundException;
 import com.testkit.build.dao.OptionRepository;
 import com.testkit.build.dto.OptionDTO;
 import com.testkit.build.dto.OptionInDTO;
@@ -34,12 +39,12 @@ public class OptionServiceImpl implements OptionService {
 	@Override
 	public List<OptionEntity> saveOptions(List<OptionInDTO> optionInDTOs, QuestionEntity questionEntity) {
 		List<OptionEntity> optionEntities = new ArrayList<OptionEntity>();
+		validateOption(optionInDTOs, questionEntity);
 		for (OptionInDTO optionInDTO : optionInDTOs) {
 			OptionEntity optionEntity = createOptionEntity(optionInDTO);
 			optionEntity.setQuestionEntity(questionEntity);
 			optionEntities.add(optionEntity);
 		}
-
 		return optionRepository.saveAll(optionEntities);
 	}
 
@@ -60,7 +65,7 @@ public class OptionServiceImpl implements OptionService {
 				}
 
 			} else {
-				optionEntity = getOptionEntityById(optionUpdateDTO.getId());
+				optionEntity = findOptionEntityById(optionUpdateDTO.getId());
 				optionEntity = updateOptionEnity(optionUpdateDTO, optionEntity);
 				optionEntity.setQuestionEntity(questionEntity);
 				existingOptionEntities.add(optionEntity);
@@ -76,18 +81,46 @@ public class OptionServiceImpl implements OptionService {
 		List<OptionDTO> optionDTOs = new ArrayList<OptionDTO>();
 		List<Optional<OptionEntity>> optionalsOptionList = optionRepository.findByQuestionId(questionId);
 		if (!optionalsOptionList.isEmpty()) {
-			for (Optional<OptionEntity> optional : optionalsOptionList) {
-				if (optional.isPresent()) {
-					optionDTOs.add(createOptionDTO(optional.get()));
-				}
+			throw new OptionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.OPTIONS_NOT_FOUND,
+							"No option available in the database with ID{" + questionId + "}")));
+		}
+
+		for (Optional<OptionEntity> optional : optionalsOptionList) {
+			if (optional.isPresent()) {
+				optionDTOs.add(createOptionDTO(optional.get()));
 			}
 		}
+
 		return optionDTOs;
+	}
+
+	@Override
+	public boolean deleteOption(int optionId) {
+		if (findOptionEntityById(optionId) != null) {
+			throw new OptionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.OPTIONS_NOT_FOUND,
+							"No Option available in the database with ID{" + optionId + "}")));
+		}
+		optionRepository.deleteById(optionId);
+		return true;
 	}
 
 	@Override
 	public void deleteOptions(List<OptionEntity> optionEntityList) {
 		optionRepository.deleteAll(optionEntityList);
+	}
+
+	private void validateOption(List<OptionInDTO> optionInDTOs, QuestionEntity questionEntity) {
+		for (OptionInDTO optionInDTO : optionInDTOs) {
+			Optional<OptionEntity> optionalEntity = optionRepository
+					.findOptionEntityByOptionTextAndQuestionEntity(optionInDTO.getOptionText(), questionEntity);
+			if (optionalEntity.isPresent()) {
+				throw new OptionAlreadyExistException(new ErrorMessage(ErrorCode.BAD_REQUEST)
+						.addDeveloperMessage(new DeveloperMessage(ErrorCode.DUPLICATE_OPTION_ENTITY,
+								"Option available in the database for same question")));
+			}
+		}
 	}
 
 	private OptionDTO createOptionDTO(OptionEntity optionEntity) {
@@ -118,13 +151,13 @@ public class OptionServiceImpl implements OptionService {
 		return optionMapper.updateOptionEntity(optionUpdateDTO, optionEntity);
 	}
 
-	private OptionEntity getOptionEntityById(Integer id) {
-
+	private OptionEntity findOptionEntityById(Integer id) {
+		OptionEntity optionEntity = null;
 		Optional<OptionEntity> optional = findByOptionId(id);
 		if (optional.isPresent())
-			return optional.get();
+			optionEntity = optional.get();
 
-		return null;
+		return optionEntity;
 	}
 
 	private Optional<OptionEntity> findByOptionId(Integer id) {

@@ -18,4 +18,7 @@ public interface OptionRepository extends JpaRepository<OptionEntity, Integer> {
 
 	List<Optional<OptionEntity>> findByQuestionId(int question_id);
 
+	Optional<OptionEntity> findOptionEntityByOptionTextAndQuestionEntity(String optionText,
+			QuestionEntity questionEntity);
+
 }
