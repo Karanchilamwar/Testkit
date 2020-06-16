@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.testkit.build.common.dto.DeveloperMessage;
+import com.testkit.build.common.dto.ErrorMessage;
+import com.testkit.build.common.enums.ErrorCode;
+import com.testkit.build.common.exception.UserAvailableException;
 import com.testkit.build.dao.ResourceRepository;
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
 import com.testkit.build.entity.ResourceEntity;
-import com.testkit.build.exception.UserAvailableException;
 import com.testkit.build.mapper.ResourceMapper;
 import com.testkit.build.services.ResourceService;
 
@@ -74,11 +77,8 @@ public class ResourceServiceImpl implements ResourceService {
 		ResourceEntity resourceEntity = this.findUserByUserEmailOrUserMobile(resourceInDTO.getUserEmail(),
 				resourceInDTO.getUserMobile());
 		if (resourceEntity != null) {
-			try {
-				throw new UserAvailableException();
-			} catch (UserAvailableException availableException) {
-
-			}
+			throw new UserAvailableException(new ErrorMessage(ErrorCode.USER_ALREADY_EXISTS)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
 		}
 
 		return true;

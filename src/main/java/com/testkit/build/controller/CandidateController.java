@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testkit.build.dto.CandidateDTO;
 import com.testkit.build.dto.CandidateInDTO;
-import com.testkit.build.exception.UserAvailableException;
 import com.testkit.build.services.CandidateService;
 
 @RestController()
@@ -24,7 +23,7 @@ public class CandidateController {
 	CandidateService service;
 
 	@PostMapping(value = "/addcandidate")
-	public CandidateDTO addUser(@RequestBody CandidateInDTO candidateIndto) throws UserAvailableException {
+	public CandidateDTO addUser(@RequestBody CandidateInDTO candidateIndto) {
 		return service.saveCandidate(candidateIndto);
 	}
 

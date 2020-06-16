@@ -4,11 +4,10 @@ import java.util.List;
 
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
-import com.testkit.build.exception.UserAvailableException;
 
 public interface ResourceService {
 
-	ResourceDTO saveResource(ResourceInDTO resourceInDTO) throws UserAvailableException;
+	ResourceDTO saveResource(ResourceInDTO resourceInDTO);
 
 	List<ResourceDTO> findAll();
 

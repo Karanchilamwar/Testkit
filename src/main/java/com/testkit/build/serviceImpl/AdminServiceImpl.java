@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.testkit.build.common.dto.DeveloperMessage;
+import com.testkit.build.common.dto.ErrorMessage;
+import com.testkit.build.common.enums.ErrorCode;
+import com.testkit.build.common.exception.UserAvailableException;
 import com.testkit.build.dao.AdminRepository;
 import com.testkit.build.dto.AdminDTO;
 import com.testkit.build.dto.AdminInDTO;
 import com.testkit.build.entity.AdminEntity;
 import com.testkit.build.entity.UserEntity;
-import com.testkit.build.exception.UserAvailableException;
 import com.testkit.build.mapper.AdminMapper;
 import com.testkit.build.services.AdminService;
 
@@ -79,12 +82,8 @@ public class AdminServiceImpl implements AdminService {
 		AdminEntity adminEntity = (AdminEntity) findUserByUserEmailOrUserMobile(adminInDTO.getUserEmail(),
 				adminInDTO.getUserMobile());
 		if (adminEntity != null) {
-			try {
-				throw new UserAvailableException();
-			} catch (UserAvailableException e) {
-
-			}
-
+			throw new UserAvailableException(new ErrorMessage(ErrorCode.USER_ALREADY_EXISTS)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
 		}
 
 		return true;

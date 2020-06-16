@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.testkit.build.common.dto.DeveloperMessage;
+import com.testkit.build.common.dto.ErrorMessage;
+import com.testkit.build.common.enums.ErrorCode;
+import com.testkit.build.common.exception.UserAvailableException;
 import com.testkit.build.dao.CandidateRepository;
 import com.testkit.build.dto.CandidateDTO;
 import com.testkit.build.dto.CandidateInDTO;
-import com.testkit.build.entity.AdminEntity;
 import com.testkit.build.entity.CandidateEntity;
-import com.testkit.build.entity.UserEntity;
-import com.testkit.build.exception.UserAvailableException;
 import com.testkit.build.mapper.CandidateMapper;
 import com.testkit.build.services.CandidateService;
 
@@ -29,7 +30,7 @@ public class CandidateServiceImpl implements CandidateService {
 	CandidateMapper mapper;
 
 	@Override
-	public CandidateDTO saveCandidate(CandidateInDTO candidateInDTO) throws UserAvailableException {
+	public CandidateDTO saveCandidate(CandidateInDTO candidateInDTO) {
 
 		validateCandidate(candidateInDTO);
 		return this.createCandidateDTO(candidateRepository.save(this.createCandidateEntity(candidateInDTO)));
@@ -69,19 +70,16 @@ public class CandidateServiceImpl implements CandidateService {
 		return mapper.CandidateInDTOToCandidateEntity(candidateInDTO, candidateEntity);
 	}
 
-	private UserEntity findUserByUserEmailOrUserMobile(String userEmail, String userMobile) {
+	private CandidateEntity findUserByUserEmailOrUserMobile(String userEmail, String userMobile) {
 		return candidateRepository.findCandidateEntityByUserEmailOrUserMobile(userEmail, userMobile);
 	}
 
 	private boolean validateCandidate(CandidateInDTO candidateInDTO) {
-		AdminEntity adminEntity = (AdminEntity) this.findUserByUserEmailOrUserMobile(candidateInDTO.getUserEmail(),
-				candidateInDTO.getUserMobile());
-		if (adminEntity != null) {
-			try {
-				throw new UserAvailableException();
-			} catch (Exception e) {
-
-			}
+		CandidateEntity candidateEntity = (CandidateEntity) this
+				.findUserByUserEmailOrUserMobile(candidateInDTO.getUserEmail(), candidateInDTO.getUserMobile());
+		if (candidateEntity != null) {
+			throw new UserAvailableException(new ErrorMessage(ErrorCode.VALIDATION_ERROR)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
 		}
 		return true;
 	}
