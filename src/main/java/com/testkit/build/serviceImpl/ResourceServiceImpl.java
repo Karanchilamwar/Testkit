@@ -12,10 +12,9 @@ import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
 import com.testkit.build.common.exception.UserAvailableException;
-<<<<<<< HEAD
+
 import com.testkit.build.common.exception.UserNotFoundException;
-=======
->>>>>>> master
+
 import com.testkit.build.dao.ResourceRepository;
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
@@ -109,13 +108,9 @@ public class ResourceServiceImpl implements ResourceService {
 		ResourceEntity resourceEntity = this.findUserByUserEmailOrUserMobile(resourceInDTO.getUserEmail(),
 				resourceInDTO.getUserMobile());
 		if (resourceEntity != null) {
-<<<<<<< HEAD
 			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
-=======
-			throw new UserAvailableException(new ErrorMessage(ErrorCode.USER_ALREADY_EXISTS)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
->>>>>>> master
+
 		}
 
 		return true;
