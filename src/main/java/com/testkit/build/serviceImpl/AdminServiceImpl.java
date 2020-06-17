@@ -12,10 +12,9 @@ import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
 import com.testkit.build.common.exception.UserAvailableException;
-<<<<<<< HEAD
+
 import com.testkit.build.common.exception.UserNotFoundException;
-=======
->>>>>>> master
+
 import com.testkit.build.dao.AdminRepository;
 import com.testkit.build.dto.AdminDTO;
 import com.testkit.build.dto.AdminInDTO;
@@ -115,13 +114,10 @@ public class AdminServiceImpl implements AdminService {
 		AdminEntity adminEntity = (AdminEntity) findUserByUserEmailOrUserMobile(adminInDTO.getUserEmail(),
 				adminInDTO.getUserMobile());
 		if (adminEntity != null) {
-<<<<<<< HEAD
+
 			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
-=======
-			throw new UserAvailableException(new ErrorMessage(ErrorCode.USER_ALREADY_EXISTS)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
->>>>>>> master
+
 		}
 
 		return true;
