@@ -13,18 +13,15 @@ import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
 import com.testkit.build.common.exception.UserAvailableException;
-<<<<<<< HEAD
+
 import com.testkit.build.common.exception.UserNotFoundException;
-=======
->>>>>>> master
 import com.testkit.build.dao.CandidateRepository;
 import com.testkit.build.dto.CandidateDTO;
 import com.testkit.build.dto.CandidateInDTO;
 import com.testkit.build.entity.CandidateEntity;
-<<<<<<< HEAD
+
 import com.testkit.build.entity.UserEntity;
-=======
->>>>>>> master
+
 import com.testkit.build.mapper.CandidateMapper;
 import com.testkit.build.services.CandidateService;
 
@@ -115,13 +112,10 @@ public class CandidateServiceImpl implements CandidateService {
 		CandidateEntity candidateEntity = (CandidateEntity) this
 				.findUserByUserEmailOrUserMobile(candidateInDTO.getUserEmail(), candidateInDTO.getUserMobile());
 		if (candidateEntity != null) {
-<<<<<<< HEAD
+
 			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
-=======
-			throw new UserAvailableException(new ErrorMessage(ErrorCode.VALIDATION_ERROR)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
->>>>>>> master
+
 		}
 		return true;
 	}
