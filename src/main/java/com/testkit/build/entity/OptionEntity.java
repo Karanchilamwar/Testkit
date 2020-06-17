@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class OptionEntity {
 	private int id;
 
 	@Column(name = "option_text")
+	@Size(max = 256)
 	private String optionText;
 
 	@ManyToOne
