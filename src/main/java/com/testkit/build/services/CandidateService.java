@@ -12,4 +12,6 @@ public interface CandidateService {
 	List<CandidateDTO> findAll();
 
 	CandidateDTO updateCandidate(int userId, CandidateInDTO candidateInDTO);
+
+	boolean deleteCandidate(int userid);
 }

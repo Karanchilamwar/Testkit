@@ -3,6 +3,7 @@ package com.testkit.build.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,11 @@ public class CandidateController {
 	@PutMapping(value = "/updatecandidate/{userId}")
 	public CandidateDTO updateAdmin(@RequestBody CandidateInDTO candidateInDTO, @PathVariable int userId) {
 		return service.updateCandidate(userId, candidateInDTO);
+	}
+
+	@DeleteMapping(value = "{userId}")
+	public boolean deleteCandidate(@PathVariable int userId) {
+		return service.deleteCandidate(userId);
 	}
 
 }

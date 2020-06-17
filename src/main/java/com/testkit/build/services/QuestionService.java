@@ -15,4 +15,6 @@ public interface QuestionService {
 	List<QuestionDTO> findQuestions();
 
 	QuestionDTO findQuestionById(int questionId);
+
+	boolean deleteQuestion(int questionid);
 }

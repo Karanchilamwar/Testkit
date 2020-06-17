@@ -3,6 +3,7 @@ package com.testkit.build.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,4 +37,10 @@ public class ResourceController {
 	public ResourceDTO updateAdmin(@RequestBody ResourceInDTO resourceInDTO, @PathVariable int userId) {
 		return service.updateResource(userId, resourceInDTO);
 	}
+
+	@DeleteMapping(value = "{questionId}")
+	public boolean deleteResource(@PathVariable int resourceId) {
+		return service.deleteResource(resourceId);
+	}
+
 }

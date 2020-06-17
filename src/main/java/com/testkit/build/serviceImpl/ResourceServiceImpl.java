@@ -12,6 +12,10 @@ import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
 import com.testkit.build.common.exception.UserAvailableException;
+<<<<<<< HEAD
+import com.testkit.build.common.exception.UserNotFoundException;
+=======
+>>>>>>> master
 import com.testkit.build.dao.ResourceRepository;
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
@@ -30,9 +34,9 @@ public class ResourceServiceImpl implements ResourceService {
 	ResourceMapper mapper;
 
 	@Override
-	public ResourceDTO saveResource(ResourceInDTO resourceInDTO) throws UserAvailableException {
+	public ResourceDTO saveResource(ResourceInDTO resourceInDTO) {
 		validateResource(resourceInDTO);
-		return this.createResourceDTO((ResourceEntity) resourceRepository.save(createResourceEntity(resourceInDTO)));
+		return this.createResourceDTO(resourceRepository.save(createResourceEntity(resourceInDTO)));
 
 	}
 
@@ -40,10 +44,42 @@ public class ResourceServiceImpl implements ResourceService {
 	public List<ResourceDTO> findAll() {
 		List<ResourceEntity> entityList = new ArrayList<>();
 		resourceRepository.findAll().forEach(entityList::add);
+		if (entityList.isEmpty()) {
+			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
+					new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION, "No user available in the database with ID")));
+		}
 		return getResourceDTOs(entityList);
 	}
 
-	public List<ResourceDTO> getResourceDTOs(List<ResourceEntity> entityList) {
+	@Override
+	public ResourceDTO updateResource(int userId, ResourceInDTO resourceInDTO) {
+		ResourceDTO resourceDTO = null;
+		Optional<ResourceEntity> optionalResourceEntity = resourceRepository.findById(userId);
+		if (!optionalResourceEntity.isPresent()) {
+			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
+							"No user available in the database with ID{" + userId + "}")));
+		}
+		ResourceEntity resourceEntity = optionalResourceEntity.get();
+		resourceEntity = updateResourceEntity(resourceInDTO, resourceEntity);
+		resourceEntity = resourceRepository.save(resourceEntity);
+		resourceDTO = createResourceDTO(resourceEntity);
+
+		return resourceDTO;
+	}
+
+	@Override
+	public boolean deleteResource(int userid) {
+		if (getResourceEntityById(userid) != null) {
+			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
+							"No user available in the database with ID{" + userid + "}")));
+		}
+		resourceRepository.deleteById(userid);
+		return true;
+	}
+
+	private List<ResourceDTO> getResourceDTOs(List<ResourceEntity> entityList) {
 		List<ResourceDTO> resDtos = new ArrayList<>();
 
 		for (ResourceEntity resourceEntity : entityList) {
@@ -52,17 +88,13 @@ public class ResourceServiceImpl implements ResourceService {
 		return resDtos;
 	}
 
-	@Override
-	public ResourceDTO updateResource(int userId, ResourceInDTO resourceInDTO) {
-		ResourceDTO resourceDTO = null;
-		Optional<ResourceEntity> optionalResourceEntity = resourceRepository.findById(userId);
-		if (optionalResourceEntity.isPresent()) {
-			ResourceEntity resourceEntity = optionalResourceEntity.get();
-			resourceEntity = updateResourceEntity(resourceInDTO, resourceEntity);
-			resourceEntity = resourceRepository.save(resourceEntity);
-			resourceDTO = createResourceDTO(resourceEntity);
+	private ResourceEntity getResourceEntityById(int userid) {
+		ResourceEntity resourceEntity = null;
+		Optional<ResourceEntity> optional = resourceRepository.findById(userid);
+		if (optional.isPresent()) {
+			resourceEntity = optional.get();
 		}
-		return resourceDTO;
+		return resourceEntity;
 	}
 
 	private ResourceEntity updateResourceEntity(ResourceInDTO resourceInDTO, ResourceEntity resourceEntity) {
@@ -77,8 +109,13 @@ public class ResourceServiceImpl implements ResourceService {
 		ResourceEntity resourceEntity = this.findUserByUserEmailOrUserMobile(resourceInDTO.getUserEmail(),
 				resourceInDTO.getUserMobile());
 		if (resourceEntity != null) {
+<<<<<<< HEAD
+			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
+					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
+=======
 			throw new UserAvailableException(new ErrorMessage(ErrorCode.USER_ALREADY_EXISTS)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
+>>>>>>> master
 		}
 
 		return true;

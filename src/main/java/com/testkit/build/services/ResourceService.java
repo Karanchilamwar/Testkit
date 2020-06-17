@@ -13,4 +13,5 @@ public interface ResourceService {
 
 	ResourceDTO updateResource(int userId, ResourceInDTO resourceInDTO);
 
+	boolean deleteResource(int userid);
 }

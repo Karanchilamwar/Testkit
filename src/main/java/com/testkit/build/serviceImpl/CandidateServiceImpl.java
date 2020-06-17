@@ -7,15 +7,24 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
 import com.testkit.build.common.exception.UserAvailableException;
+<<<<<<< HEAD
+import com.testkit.build.common.exception.UserNotFoundException;
+=======
+>>>>>>> master
 import com.testkit.build.dao.CandidateRepository;
 import com.testkit.build.dto.CandidateDTO;
 import com.testkit.build.dto.CandidateInDTO;
 import com.testkit.build.entity.CandidateEntity;
+<<<<<<< HEAD
+import com.testkit.build.entity.UserEntity;
+=======
+>>>>>>> master
 import com.testkit.build.mapper.CandidateMapper;
 import com.testkit.build.services.CandidateService;
 
@@ -41,15 +50,11 @@ public class CandidateServiceImpl implements CandidateService {
 	public List<CandidateDTO> findAll() {
 		List<CandidateEntity> list = new ArrayList<>();
 		candidateRepository.findAll().forEach(list::add);
-		return createCandidateDTOS(list);
-	}
-
-	public List<CandidateDTO> createCandidateDTOS(List<CandidateEntity> list) {
-		List<CandidateDTO> candDtos = new ArrayList<>();
-		for (CandidateEntity candidateEntity : list) {
-			candDtos.add(createCandidateDTO(candidateEntity));
+		if (list.isEmpty()) {
+			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
+					new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION, "No user available in the database")));
 		}
-		return candDtos;
+		return createCandidateDTOS(list);
 	}
 
 	@Override
@@ -58,12 +63,44 @@ public class CandidateServiceImpl implements CandidateService {
 
 		Optional<CandidateEntity> optionalCandidateEntity = candidateRepository.findById(userId);
 
-		if (optionalCandidateEntity.isPresent()) {
-			CandidateEntity candidateEntity = optionalCandidateEntity.get();
-			candidateEntity = updateCandidateEntity(candidateInDTO, candidateEntity);
-			candidateDTO = createCandidateDTO(candidateRepository.save(candidateEntity));
+		if (!optionalCandidateEntity.isPresent()) {
+			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
+							"No user available in the database with ID{" + userId + "}")));
 		}
+		CandidateEntity candidateEntity = optionalCandidateEntity.get();
+		candidateEntity = updateCandidateEntity(candidateInDTO, candidateEntity);
+		candidateDTO = createCandidateDTO(candidateRepository.save(candidateEntity));
+
 		return candidateDTO;
+	}
+
+	@Override
+	public boolean deleteCandidate(int userid) {
+		if (getCandidateEntityById(userid) != null) {
+			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
+							"No user available in the database with ID{" + userid + "}")));
+		}
+		candidateRepository.deleteById(userid);
+		return true;
+	}
+
+	private List<CandidateDTO> createCandidateDTOS(List<CandidateEntity> list) {
+		List<CandidateDTO> candDtos = new ArrayList<>();
+		for (CandidateEntity candidateEntity : list) {
+			candDtos.add(createCandidateDTO(candidateEntity));
+		}
+		return candDtos;
+	}
+
+	private CandidateEntity getCandidateEntityById(int userid) {
+		CandidateEntity candidateEntity = null;
+		Optional<CandidateEntity> optional = candidateRepository.findById(userid);
+		if (optional.isPresent()) {
+			candidateEntity = optional.get();
+		}
+		return candidateEntity;
 	}
 
 	private CandidateEntity updateCandidateEntity(CandidateInDTO candidateInDTO, CandidateEntity candidateEntity) {
@@ -78,8 +115,13 @@ public class CandidateServiceImpl implements CandidateService {
 		CandidateEntity candidateEntity = (CandidateEntity) this
 				.findUserByUserEmailOrUserMobile(candidateInDTO.getUserEmail(), candidateInDTO.getUserMobile());
 		if (candidateEntity != null) {
+<<<<<<< HEAD
+			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
+					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
+=======
 			throw new UserAvailableException(new ErrorMessage(ErrorCode.VALIDATION_ERROR)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS)));
+>>>>>>> master
 		}
 		return true;
 	}
@@ -90,6 +132,11 @@ public class CandidateServiceImpl implements CandidateService {
 
 	private CandidateDTO createCandidateDTO(CandidateEntity candidateEntity) {
 		return mapper.CandidateEntityTOCandidateDTO(candidateEntity);
+	}
+
+	@ExceptionHandler(UserAvailableException.class)
+	public void handleException() {
+
 	}
 
 }

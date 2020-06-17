@@ -10,10 +10,10 @@ import com.testkit.build.dto.QuestionInDTO;
 import com.testkit.build.dto.QuestionUpdateDTO;
 import com.testkit.build.entity.QuestionEntity;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface QuestionMapper {
 
-	@Mapping(source = "optionInDTOList", target = "optionEntityList")
+	@Mapping(source = "questionInDTO.optionInDTOList", target = "optionEntityList")
 	QuestionEntity questionInDTOToQuestionEntity(QuestionInDTO questionInDTO);
 
 	@Mapping(source = "questionEntity.optionEntityList", target = "optionDTOList")
