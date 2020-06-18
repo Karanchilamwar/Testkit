@@ -17,4 +17,6 @@ public interface OptionService {
 	List<OptionDTO> getOptionsByQuestionEntity(int questionId);
 
 	void deleteOptions(List<OptionEntity> optionEntityList);
+
+	boolean deleteOption(int optionid);
 }

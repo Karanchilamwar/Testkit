@@ -3,6 +3,7 @@ package com.testkit.build.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
-import com.testkit.build.exception.UserAvailableException;
 import com.testkit.build.services.ResourceService;
 
 @RestController()
@@ -24,7 +24,7 @@ public class ResourceController {
 	ResourceService service;
 
 	@PostMapping(value = "/addresource")
-	public ResourceDTO addResource(@RequestBody ResourceInDTO candidateIndto) throws UserAvailableException {
+	public ResourceDTO addResource(@RequestBody ResourceInDTO candidateIndto) {
 		return service.saveResource(candidateIndto);
 	}
 
@@ -37,4 +37,10 @@ public class ResourceController {
 	public ResourceDTO updateAdmin(@RequestBody ResourceInDTO resourceInDTO, @PathVariable int userId) {
 		return service.updateResource(userId, resourceInDTO);
 	}
+
+	@DeleteMapping(value = "{questionId}")
+	public boolean deleteResource(@PathVariable int resourceId) {
+		return service.deleteResource(resourceId);
+	}
+
 }

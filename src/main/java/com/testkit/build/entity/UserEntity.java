@@ -8,8 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.validation.constraints.Size;
 
-import com.testkit.build.enums.UserType;
+import com.testkit.build.common.enums.UserType;
 
 import lombok.Data;
 
@@ -25,15 +26,19 @@ public abstract class UserEntity {
 	private int id;
 
 	@Column(name = "user_name")
+	@Size(max = 50)
 	private String userName;
 
 	@Column(name = "user_email")
+	@Size(max = 30)
 	private String userEmail;
 
 	@Column(name = "user_password")
+	@Size(max = 10)
 	private String userPassword;
 
 	@Column(name = "user_mobile")
+	@Size(max = 12)
 	private String userMobile;
 
 	@Column(name = "user_type", insertable = false, updatable = false)

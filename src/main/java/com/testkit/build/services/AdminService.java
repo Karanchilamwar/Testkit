@@ -12,4 +12,7 @@ public interface AdminService {
 	List<AdminDTO> findAll();
 
 	AdminDTO updateAdmin(int userId, AdminInDTO adminInDTO);
+
+	boolean deleteAdmin(int userid);
+
 }

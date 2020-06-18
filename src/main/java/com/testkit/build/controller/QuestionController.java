@@ -3,6 +3,9 @@ package com.testkit.build.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,10 +29,10 @@ public class QuestionController {
 	@Autowired
 	QuestionRepository questionRepository;
 
-	@RequestMapping("/getquestion")
-	public List<QuestionDTO> getQuestionList() {
-
-		return questionService.findQuestions();
+	@RequestMapping("/getquestion/{PageNumber}/{PageSize}")
+	public List<QuestionDTO> getQuestionList(@PathVariable int PageNumber, @PathVariable int PageSize) {
+		Pageable pageable = PageRequest.of(PageNumber, PageSize);
+		return questionService.findQuestions(pageable);
 	}
 
 	@RequestMapping("/savequestion")
@@ -45,6 +48,21 @@ public class QuestionController {
 	@GetMapping("/getquestion/{questionId}")
 	public QuestionDTO getQUestion(@PathVariable int questionId) {
 		return questionService.findQuestionById(questionId);
+	}
+
+	@GetMapping("/type/{questionType}")
+	public List<QuestionDTO> getQUestion(@PathVariable String questionType) {
+		return questionService.findByType(questionType);
+	}
+
+	@DeleteMapping(value = "{questionId}")
+	public boolean deleteQuestion(@PathVariable int questionId) {
+		return questionService.deleteQuestion(questionId);
+	}
+
+	@GetMapping("/byoption/{optionText}")
+	public List<QuestionDTO> findQuestionByOptionText(@PathVariable String optionText) {
+		return questionService.findQuestionListByOptionText(optionText);
 	}
 
 }
