@@ -24,7 +24,7 @@ public class QCandidateEntity extends EntityPathBase<CandidateEntity> {
     //inherited
     public final NumberPath<Integer> id = _super.id;
 
-    public final DateTimePath<java.util.Date> registrationDate = createDateTime("registrationDate", java.util.Date.class);
+    public final DatePath<java.util.Date> registrationDate = createDate("registrationDate", java.util.Date.class);
 
     //inherited
     public final StringPath userEmail = _super.userEmail;
