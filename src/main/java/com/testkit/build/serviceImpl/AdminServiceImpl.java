@@ -8,17 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
-import com.testkit.build.common.exception.UserAvailableException;
-import com.testkit.build.common.exception.UserNotFoundException;
+import com.testkit.build.common.exception.BadRequestException;
+import com.testkit.build.common.exception.NotFoundException;
 import com.testkit.build.dao.AdminRepository;
 import com.testkit.build.dto.AdminDTO;
 import com.testkit.build.dto.AdminInDTO;
 import com.testkit.build.entity.AdminEntity;
+import com.testkit.build.entity.QAdminEntity;
 import com.testkit.build.entity.UserEntity;
 import com.testkit.build.mapper.AdminMapper;
+import com.testkit.build.predicates.AdminPredicate;
 import com.testkit.build.services.AdminService;
 
 @Service
@@ -42,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
 		List<AdminEntity> adminEntitylist = new ArrayList<>();
 		this.adminRepository.findAll().forEach(adminEntitylist::add);
 		if (adminEntitylist.isEmpty()) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION, "No users available in the database")));
 		}
 		return createAdminDTOs(adminEntitylist);
@@ -54,7 +57,7 @@ public class AdminServiceImpl implements AdminService {
 		Optional<AdminEntity> optionalAdminEntity = adminRepository.findById(userId);
 
 		if (!optionalAdminEntity.isPresent()) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
 							"No user available in the database with ID{" + userId + "}")));
 		}
@@ -69,20 +72,23 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public boolean deleteAdmin(int userid) {
-		if (findAdminEntityById(userid) != null) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
-							"No user available in the database with ID{" + userid + "}")));
-		}
+		findAdminEntityById(userid);
 		adminRepository.deleteById(userid);
 		return true;
 	}
 
-	private AdminEntity findAdminEntityById(int userid) {
+	private AdminEntity findAdminEntityById(int userId) {
 		AdminEntity adminEntity = null;
-		Optional<AdminEntity> optional = adminRepository.findById(userid);
-		if (optional.isPresent()) {
-			adminEntity = optional.get();
+		Optional<AdminEntity> optionalAdminEntity = null;
+		QAdminEntity qAdminEntity = QAdminEntity.adminEntity;
+		BooleanExpression booleanExpression = AdminPredicate.userIdEq(userId);
+		optionalAdminEntity = adminRepository.findOne(booleanExpression);
+		if (optionalAdminEntity.isPresent()) {
+			adminEntity = optionalAdminEntity.get();
+		} else {
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
+							"No user available in the database with ID{" + userId + "}")));
 		}
 		return adminEntity;
 	}
@@ -113,7 +119,7 @@ public class AdminServiceImpl implements AdminService {
 				adminInDTO.getUserMobile());
 		if (adminEntity != null) {
 
-			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
+			throw new BadRequestException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
 
 		}

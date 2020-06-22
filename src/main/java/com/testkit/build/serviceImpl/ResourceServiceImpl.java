@@ -8,16 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
-import com.testkit.build.common.exception.UserAvailableException;
-import com.testkit.build.common.exception.UserNotFoundException;
+import com.testkit.build.common.exception.BadRequestException;
+import com.testkit.build.common.exception.NotFoundException;
 import com.testkit.build.dao.ResourceRepository;
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
 import com.testkit.build.entity.ResourceEntity;
 import com.testkit.build.mapper.ResourceMapper;
+import com.testkit.build.predicates.ResourcePredicate;
 import com.testkit.build.services.ResourceService;
 
 @Service
@@ -42,7 +44,7 @@ public class ResourceServiceImpl implements ResourceService {
 		List<ResourceEntity> entityList = new ArrayList<>();
 		resourceRepository.findAll().forEach(entityList::add);
 		if (entityList.isEmpty()) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION, "No user available in the database with ID")));
 		}
 		return getResourceDTOs(entityList);
@@ -53,7 +55,7 @@ public class ResourceServiceImpl implements ResourceService {
 		ResourceDTO resourceDTO = null;
 		Optional<ResourceEntity> optionalResourceEntity = resourceRepository.findById(userId);
 		if (!optionalResourceEntity.isPresent()) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
 							"No user available in the database with ID{" + userId + "}")));
 		}
@@ -67,11 +69,8 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public boolean deleteResource(int userid) {
-		if (getResourceEntityById(userid) != null) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
-							"No user available in the database with ID{" + userid + "}")));
-		}
+		getResourceEntityById(userid);
+
 		resourceRepository.deleteById(userid);
 		return true;
 	}
@@ -85,11 +84,17 @@ public class ResourceServiceImpl implements ResourceService {
 		return resDtos;
 	}
 
-	private ResourceEntity getResourceEntityById(int userid) {
+	private ResourceEntity getResourceEntityById(int userId) {
 		ResourceEntity resourceEntity = null;
-		Optional<ResourceEntity> optional = resourceRepository.findById(userid);
+		BooleanExpression idEquExp = ResourcePredicate.userIdEq(userId);
+		Optional<ResourceEntity> optional = resourceRepository.findOne(idEquExp);
 		if (optional.isPresent()) {
 			resourceEntity = optional.get();
+		} else {
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
+							"No user available in the database with ID{" + userId + "}")));
+
 		}
 		return resourceEntity;
 	}
@@ -107,7 +112,7 @@ public class ResourceServiceImpl implements ResourceService {
 				resourceInDTO.getUserMobile());
 		if (resourceEntity != null) {
 
-			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
+			throw new BadRequestException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
 
 		}

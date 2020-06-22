@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
-import com.testkit.build.common.exception.OptionAlreadyExistException;
-import com.testkit.build.common.exception.OptionNotFoundException;
+import com.testkit.build.common.exception.BadRequestException;
+import com.testkit.build.common.exception.NotFoundException;
 import com.testkit.build.dao.OptionRepository;
 import com.testkit.build.dto.OptionDTO;
 import com.testkit.build.dto.OptionInDTO;
@@ -81,7 +81,7 @@ public class OptionServiceImpl implements OptionService {
 		List<OptionDTO> optionDTOs = new ArrayList<OptionDTO>();
 		List<Optional<OptionEntity>> optionalsOptionList = optionRepository.findByQuestionId(questionId);
 		if (!optionalsOptionList.isEmpty()) {
-			throw new OptionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.OPTIONS_NOT_FOUND,
 							"No option available in the database with ID{" + questionId + "}")));
 		}
@@ -98,7 +98,7 @@ public class OptionServiceImpl implements OptionService {
 	@Override
 	public boolean deleteOption(int optionId) {
 		if (findOptionEntityById(optionId) != null) {
-			throw new OptionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.OPTIONS_NOT_FOUND,
 							"No Option available in the database with ID{" + optionId + "}")));
 		}
@@ -116,7 +116,7 @@ public class OptionServiceImpl implements OptionService {
 			Optional<OptionEntity> optionalEntity = optionRepository
 					.findOptionEntityByOptionTextAndQuestionEntity(optionInDTO.getOptionText(), questionEntity);
 			if (optionalEntity.isPresent()) {
-				throw new OptionAlreadyExistException(new ErrorMessage(ErrorCode.BAD_REQUEST)
+				throw new BadRequestException(new ErrorMessage(ErrorCode.BAD_REQUEST)
 						.addDeveloperMessage(new DeveloperMessage(ErrorCode.DUPLICATE_OPTION_ENTITY,
 								"Option available in the database for same question")));
 			}

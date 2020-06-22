@@ -9,15 +9,15 @@ import lombok.Getter;
 
 @Getter
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class OptionAlreadyExistException extends AbstractException {
+public class BadRequestException extends AbstractException {
 	private static final long serialVersionUID = 6277511269832317527L;
 
-	public OptionAlreadyExistException(ErrorMessage errorMessage) {
+	public BadRequestException(ErrorMessage errorMessage) {
 		super(errorMessage);
 		// TODO Auto-generated constructor stub
 	}
 
-	public OptionAlreadyExistException(ErrorMessage errorMessage, Throwable throwable) {
+	public BadRequestException(ErrorMessage errorMessage, Throwable throwable) {
 		super(errorMessage, throwable);
 		// TODO Auto-generated constructor stub
 	}

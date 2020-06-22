@@ -9,4 +9,10 @@ public class AdminPredicate {
 
 		return adminEntity.userName.eq(questionText);
 	}
+
+	public static BooleanExpression userIdEq(int userId) {
+		QAdminEntity adminEntity = QAdminEntity.adminEntity;
+
+		return adminEntity.id.eq(userId);
+	}
 }

@@ -12,8 +12,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
-import com.testkit.build.common.exception.QuestionAlreadyExistException;
-import com.testkit.build.common.exception.QuestionNotFoundException;
+import com.testkit.build.common.exception.BadRequestException;
+import com.testkit.build.common.exception.NotFoundException;
 import com.testkit.build.dao.QuestionRepository;
 import com.testkit.build.dto.OptionUpdateDTO;
 import com.testkit.build.dto.QuestionDTO;
@@ -52,7 +52,7 @@ public class QuestionServiceImpl implements QuestionService {
 		QuestionDTO questionDTO = null;
 		Optional<QuestionEntity> optionalQuestionEntity = questionRepository.findById(questionUpdateDTO.getId());
 		if (!optionalQuestionEntity.isPresent()) {
-			throw new QuestionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
 							"No Question available in the database with ID{" + questionUpdateDTO.getId() + "}")));
 		}
@@ -71,7 +71,7 @@ public class QuestionServiceImpl implements QuestionService {
 		List<QuestionEntity> questionEntityList = new ArrayList<QuestionEntity>();
 		questionRepository.findAll().forEach(questionEntityList::add);
 		if (questionEntityList.isEmpty()) {
-			throw new QuestionNotFoundException(
+			throw new NotFoundException(
 					new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(new DeveloperMessage(
 							ErrorCode.QUESTION_NOT_FOUND, "No Questiona available in the database with ID")));
 		}
@@ -83,7 +83,7 @@ public class QuestionServiceImpl implements QuestionService {
 		QuestionDTO questionDTO = null;
 		Optional<QuestionEntity> optionalQuestionEntity = questionRepository.findById(questionId);
 		if (optionalQuestionEntity.isPresent()) {
-			throw new QuestionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
 							"No Question available in the database with ID{" + questionId + "}")));
 		}
@@ -94,7 +94,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public boolean deleteQuestion(int questionId) {
 		if (findQuestionById(questionId) != null) {
-			throw new QuestionNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
 							"No Question available in the database with ID{" + questionId + "}")));
 		}
@@ -136,7 +136,7 @@ public class QuestionServiceImpl implements QuestionService {
 		QuestionEntity questionEntity = findQuestionEntityByQuestionTextAndType(questionInDTO.getQuestionText(),
 				questionInDTO.getType());
 		if (questionEntity != null) {
-			throw new QuestionAlreadyExistException(new ErrorMessage(ErrorCode.BAD_REQUEST)
+			throw new BadRequestException(new ErrorMessage(ErrorCode.BAD_REQUEST)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.DUPLICATE_QUESTION_ENTITY,
 							"Question entity with same text contain and type already exists")));
 		}

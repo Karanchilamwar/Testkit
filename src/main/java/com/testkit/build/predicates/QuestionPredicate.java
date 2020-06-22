@@ -7,13 +7,11 @@ public class QuestionPredicate {
 
 	public static BooleanExpression questionTextEq(String questionText) {
 		QQuestionEntity qQuestionEntity = QQuestionEntity.questionEntity;
-
 		return qQuestionEntity.questionText.eq(questionText);
 	}
 
 	public static BooleanExpression questionTypeEq(String questionType) {
 		QQuestionEntity qQuestionEntity = QQuestionEntity.questionEntity;
-
 		return qQuestionEntity.type.eq(questionType);
 	}
 }

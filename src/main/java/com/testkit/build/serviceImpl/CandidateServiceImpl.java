@@ -7,18 +7,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
-import com.testkit.build.common.exception.UserAvailableException;
-import com.testkit.build.common.exception.UserNotFoundException;
+import com.testkit.build.common.exception.BadRequestException;
+import com.testkit.build.common.exception.NotFoundException;
 import com.testkit.build.dao.CandidateRepository;
 import com.testkit.build.dto.CandidateDTO;
 import com.testkit.build.dto.CandidateInDTO;
 import com.testkit.build.entity.CandidateEntity;
 import com.testkit.build.mapper.CandidateMapper;
+import com.testkit.build.predicates.CandidatePredicate;
 import com.testkit.build.services.CandidateService;
 
 @Service
@@ -44,7 +45,7 @@ public class CandidateServiceImpl implements CandidateService {
 		List<CandidateEntity> list = new ArrayList<>();
 		candidateRepository.findAll().forEach(list::add);
 		if (list.isEmpty()) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION, "No user available in the database")));
 		}
 		return createCandidateDTOS(list);
@@ -57,7 +58,7 @@ public class CandidateServiceImpl implements CandidateService {
 		Optional<CandidateEntity> optionalCandidateEntity = candidateRepository.findById(userId);
 
 		if (!optionalCandidateEntity.isPresent()) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
 							"No user available in the database with ID{" + userId + "}")));
 		}
@@ -70,11 +71,7 @@ public class CandidateServiceImpl implements CandidateService {
 
 	@Override
 	public boolean deleteCandidate(int userid) {
-		if (getCandidateEntityById(userid) != null) {
-			throw new UserNotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
-							"No user available in the database with ID{" + userid + "}")));
-		}
+		getCandidateEntityById(userid);
 		candidateRepository.deleteById(userid);
 		return true;
 	}
@@ -87,11 +84,16 @@ public class CandidateServiceImpl implements CandidateService {
 		return candDtos;
 	}
 
-	private CandidateEntity getCandidateEntityById(int userid) {
+	private CandidateEntity getCandidateEntityById(int userId) {
 		CandidateEntity candidateEntity = null;
-		Optional<CandidateEntity> optional = candidateRepository.findById(userid);
+		BooleanExpression candidateIdExp = CandidatePredicate.userIdEq(userId);
+		Optional<CandidateEntity> optional = candidateRepository.findOne(candidateIdExp);
 		if (optional.isPresent()) {
 			candidateEntity = optional.get();
+		} else {
+			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
+							"No user available in the database with ID{" + userId + "}")));
 		}
 		return candidateEntity;
 	}
@@ -109,7 +111,7 @@ public class CandidateServiceImpl implements CandidateService {
 				candidateInDTO.getUserMobile());
 		if (candidateEntity != null) {
 
-			throw new UserAvailableException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
+			throw new BadRequestException(new ErrorMessage(ErrorCode.BAD_REQUEST).addDeveloperMessage(
 					new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS, "User is already registered, try log-in")));
 
 		}
@@ -122,11 +124,6 @@ public class CandidateServiceImpl implements CandidateService {
 
 	private CandidateDTO createCandidateDTO(CandidateEntity candidateEntity) {
 		return mapper.CandidateEntityTOCandidateDTO(candidateEntity);
-	}
-
-	@ExceptionHandler(UserAvailableException.class)
-	public void handleException() {
-
 	}
 
 }
