@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
+import com.testkit.build.entity.ResourceEntity;
 
 public interface ResourceService {
 
@@ -14,4 +15,6 @@ public interface ResourceService {
 	ResourceDTO updateResource(int userId, ResourceInDTO resourceInDTO);
 
 	boolean deleteResource(int userid);
+
+	ResourceEntity getResourceEntityById(int userId);
 }

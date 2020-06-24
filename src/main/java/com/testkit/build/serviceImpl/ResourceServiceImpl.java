@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
@@ -52,39 +53,23 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public ResourceDTO updateResource(int userId, ResourceInDTO resourceInDTO) {
-		ResourceDTO resourceDTO = null;
-		Optional<ResourceEntity> optionalResourceEntity = resourceRepository.findById(userId);
-		if (!optionalResourceEntity.isPresent()) {
-			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.NOT_FOUND_EXCEPTION,
-							"No user available in the database with ID{" + userId + "}")));
-		}
-		ResourceEntity resourceEntity = optionalResourceEntity.get();
+		ResourceEntity resourceEntity = getResourceEntityById(userId);
 		resourceEntity = updateResourceEntity(resourceInDTO, resourceEntity);
+		ValidateResourceForSameEmailOrMobileWithDifferentId(resourceEntity);
 		resourceEntity = resourceRepository.save(resourceEntity);
-		resourceDTO = createResourceDTO(resourceEntity);
-
-		return resourceDTO;
+		return createResourceDTO(resourceEntity);
 	}
 
 	@Override
-	public boolean deleteResource(int userid) {
-		getResourceEntityById(userid);
+	public boolean deleteResource(int userId) {
+		getResourceEntityById(userId);
+		resourceRepository.deleteById(userId);
 
-		resourceRepository.deleteById(userid);
 		return true;
 	}
 
-	private List<ResourceDTO> getResourceDTOs(List<ResourceEntity> entityList) {
-		List<ResourceDTO> resDtos = new ArrayList<>();
-
-		for (ResourceEntity resourceEntity : entityList) {
-			resDtos.add(createResourceDTO(resourceEntity));
-		}
-		return resDtos;
-	}
-
-	private ResourceEntity getResourceEntityById(int userId) {
+	@Override
+	public ResourceEntity getResourceEntityById(int userId) {
 		ResourceEntity resourceEntity = null;
 		BooleanExpression idEquExp = ResourcePredicate.userIdEq(userId);
 		Optional<ResourceEntity> optional = resourceRepository.findOne(idEquExp);
@@ -97,6 +82,28 @@ public class ResourceServiceImpl implements ResourceService {
 
 		}
 		return resourceEntity;
+	}
+
+	private Boolean ValidateResourceForSameEmailOrMobileWithDifferentId(ResourceEntity resourceEntity) {
+
+		BooleanBuilder where = ResourcePredicate.userEmailEqOrMobileEqIdNeq(resourceEntity);
+		Optional<ResourceEntity> optionalResurceEntity = resourceRepository.findOne(where);
+		if (optionalResurceEntity.isPresent()) {
+			throw new BadRequestException(new ErrorMessage(ErrorCode.BAD_REQUEST)
+					.addDeveloperMessage(new DeveloperMessage(ErrorCode.USER_ALREADY_EXISTS,
+							"Another entity with same email and mobile number present")));
+		}
+
+		return true;
+	}
+
+	private List<ResourceDTO> getResourceDTOs(List<ResourceEntity> entityList) {
+		List<ResourceDTO> resDtos = new ArrayList<>();
+
+		for (ResourceEntity resourceEntity : entityList) {
+			resDtos.add(createResourceDTO(resourceEntity));
+		}
+		return resDtos;
 	}
 
 	private ResourceEntity updateResourceEntity(ResourceInDTO resourceInDTO, ResourceEntity resourceEntity) {

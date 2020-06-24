@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <meta charset='utf-8'>
+  <title>TestNG reports</title>
+
+    <link type="text/css" href="testng-reports1.css" rel="stylesheet" id="ultra" />
+    <link type="text/css" href="testng-reports.css" rel="stylesheet" id="retro" disabled="false"/>
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="testng-reports.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      var suiteTableInitFunctions = new Array();
+      var suiteTableData = new Array();
+    </script>
+    <!--
+      <script type="text/javascript" src="jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+     -->
+  </head>
+
+  <body>
+    <div class="top-banner-root">
+      <span class="top-banner-title-font">Test results</span>
+      <button class="button" id="button">Switch Retro Theme</button> <!-- button -->
+      <br/>
+      <span class="top-banner-font-1">1 suite</span>
+    </div> <!-- top-banner-root -->
+    <div class="navigator-root">
+      <div class="navigator-suite-header">
+        <span>All suites</span>
+        <a href="#" class="collapse-all-link" title="Collapse/expand all the suites">
+          <img class="collapse-all-icon" src="collapseall.gif">
+          </img> <!-- collapse-all-icon -->
+        </a> <!-- collapse-all-link -->
+      </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" class="navigator-link" panel-name="suite-Default_suite">
+              <span class="suite-name border-passed">Default suite</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="test-xml-Default_suite">
+                    <span>C:\Users\Karan\AppData\Local\Temp\testng-eclipse--610031143\testng-customsuite.xml</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="testlist-Default_suite">
+                    <span class="test-stats">1 test</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="group-Default_suite">
+                    <span>0 groups</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="times-Default_suite">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="reporter-Default_suite">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-Default_suite">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="chronological-Default_suite">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">11 methods,   11 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-Default_suite" class="hide-methods passed suite-Default_suite"> (hide)</a> <!-- hide-methods passed suite-Default_suite -->
+                      <a href="#" panel-name="suite-Default_suite" class="show-methods passed suite-Default_suite"> (show)</a> <!-- show-methods passed suite-Default_suite -->
+                    </span>
+                    <div class="method-list-content passed suite-Default_suite">
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_01_shouldThrowBRE_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:13 IST 2020), ResourceEntity(registrationDate=Wed Ju...)">RST_01_shouldThrowBRE_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:13 IST 2020), ResourceEntity(registrationDate=Wed Ju...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_02_shouldSuccess_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed Ju...)">RST_02_shouldSuccess_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed Ju...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError(202, null)">RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError(202, null)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_04_shouldThrow_BRE_UpdateResource_BadRequestError(ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed J...)">RST_04_shouldThrow_BRE_UpdateResource_BadRequestError(ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed J...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_05_ShouldRunSuccess_UpdateResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceDTO(registrationDate=Wed J...)">RST_05_ShouldRunSuccess_UpdateResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceDTO(registrationDate=Wed J...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_06_shouldThrowNFE_deleteResource(101)">RST_06_shouldThrowNFE_deleteResource(101)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_07_shouldSuccess_deleteResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))">RST_07_shouldSuccess_deleteResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_08_shouldThrowNFE_findAll">RST_08_shouldThrowNFE_findAll</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_10_shouldThrowNFE_getResourceEntityById">RST_10_shouldThrowNFE_getResourceEntityById</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_11_shouldSuccess_getResourceEntityById(2, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))">RST_11_shouldSuccess_getResourceEntityById(2, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.testkit.servicetest.ResourceServiceTest" hash-for-method="RST_9_shouldSuccess_findAll([ResourceEntity(registrationDate=null), ResourceEntity(registrationDate=null)])">RST_9_shouldSuccess_findAll([ResourceEntity(registrationDate=null), ResourceEntity(registrationDate=null)])</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-Default_suite -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
+    </div> <!-- navigator-root -->
+    <div class="wrapper">
+      <div class="main-panel-root">
+        <div panel-name="suite-Default_suite" class="panel Default_suite">
+          <div class="suite-Default_suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.testkit.servicetest.ResourceServiceTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_01_shouldThrowBRE_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:13 IST 2020), ResourceEntity(registrationDate=Wed Ju...)">
+                  </a> <!-- RST_01_shouldThrowBRE_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:13 IST 2020), ResourceEntity(registrationDate=Wed Ju...) -->
+                  <span class="method-name">RST_01_shouldThrowBRE_saveResource</span>
+                  <span class="parameters">(ResourceInDTO(registrationDate=Wed Jun 24 18:12:13 IST 2020), ResourceEntity(registrationDate=Wed Jun 24 18:12:13 IST 2020))</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_02_shouldSuccess_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed Ju...)">
+                  </a> <!-- RST_02_shouldSuccess_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed Ju...) -->
+                  <span class="method-name">RST_02_shouldSuccess_saveResource</span>
+                  <span class="parameters">(ResourceInDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020))</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError(202, null)">
+                  </a> <!-- RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError(202, null) -->
+                  <span class="method-name">RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError</span>
+                  <span class="parameters">(202, null)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_04_shouldThrow_BRE_UpdateResource_BadRequestError(ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed J...)">
+                  </a> <!-- RST_04_shouldThrow_BRE_UpdateResource_BadRequestError(ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed J...) -->
+                  <span class="method-name">RST_04_shouldThrow_BRE_UpdateResource_BadRequestError</span>
+                  <span class="parameters">(ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_05_ShouldRunSuccess_UpdateResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceDTO(registrationDate=Wed J...)">
+                  </a> <!-- RST_05_ShouldRunSuccess_UpdateResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceDTO(registrationDate=Wed J...) -->
+                  <span class="method-name">RST_05_ShouldRunSuccess_UpdateResource</span>
+                  <span class="parameters">(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020))</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_06_shouldThrowNFE_deleteResource(101)">
+                  </a> <!-- RST_06_shouldThrowNFE_deleteResource(101) -->
+                  <span class="method-name">RST_06_shouldThrowNFE_deleteResource</span>
+                  <span class="parameters">(101)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_07_shouldSuccess_deleteResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))">
+                  </a> <!-- RST_07_shouldSuccess_deleteResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)) -->
+                  <span class="method-name">RST_07_shouldSuccess_deleteResource</span>
+                  <span class="parameters">(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_08_shouldThrowNFE_findAll">
+                  </a> <!-- RST_08_shouldThrowNFE_findAll -->
+                  <span class="method-name">RST_08_shouldThrowNFE_findAll</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_10_shouldThrowNFE_getResourceEntityById">
+                  </a> <!-- RST_10_shouldThrowNFE_getResourceEntityById -->
+                  <span class="method-name">RST_10_shouldThrowNFE_getResourceEntityById</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_11_shouldSuccess_getResourceEntityById(2, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))">
+                  </a> <!-- RST_11_shouldSuccess_getResourceEntityById(2, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)) -->
+                  <span class="method-name">RST_11_shouldSuccess_getResourceEntityById</span>
+                  <span class="parameters">(2, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="RST_9_shouldSuccess_findAll([ResourceEntity(registrationDate=null), ResourceEntity(registrationDate=null)])">
+                  </a> <!-- RST_9_shouldSuccess_findAll([ResourceEntity(registrationDate=null), ResourceEntity(registrationDate=null)]) -->
+                  <span class="method-name">RST_9_shouldSuccess_findAll</span>
+                  <span class="parameters">([ResourceEntity(registrationDate=null), ResourceEntity(registrationDate=null)])</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Default_suite-class-passed -->
+        </div> <!-- panel Default_suite -->
+        <div panel-name="test-xml-Default_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">C:\Users\Karan\AppData\Local\Temp\testng-eclipse--610031143\testng-customsuite.xml</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
+&lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;Default suite&quot;&gt;
+  &lt;test thread-count=&quot;5&quot; verbose=&quot;2&quot; name=&quot;Default test&quot;&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;com.testkit.servicetest.ResourceServiceTest&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- Default test --&gt;
+&lt;/suite&gt; &lt;!-- Default suite --&gt;
+            </pre>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="testlist-Default_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Tests for Default suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <ul>
+              <li>
+                <span class="test-name">Default test (1 class)</span>
+              </li>
+            </ul>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="group-Default_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Groups for Default suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="times-Default_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Times for Default suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="times-div">
+              <script type="text/javascript">
+suiteTableInitFunctions.push('tableData_Default_suite');
+function tableData_Default_suite() {
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Number');
+data.addColumn('string', 'Method');
+data.addColumn('string', 'Class');
+data.addColumn('number', 'Time (ms)');
+data.addRows(11);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError')
+data.setCell(0, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(0, 3, 110);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'RST_01_shouldThrowBRE_saveResource')
+data.setCell(1, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(1, 3, 72);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'RST_07_shouldSuccess_deleteResource')
+data.setCell(2, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(2, 3, 16);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'RST_02_shouldSuccess_saveResource')
+data.setCell(3, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(3, 3, 5);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'RST_05_ShouldRunSuccess_UpdateResource')
+data.setCell(4, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(4, 3, 4);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'RST_11_shouldSuccess_getResourceEntityById')
+data.setCell(5, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(5, 3, 4);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'RST_04_shouldThrow_BRE_UpdateResource_BadRequestError')
+data.setCell(6, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(6, 3, 3);
+data.setCell(7, 0, 7)
+data.setCell(7, 1, 'RST_06_shouldThrowNFE_deleteResource')
+data.setCell(7, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(7, 3, 3);
+data.setCell(8, 0, 8)
+data.setCell(8, 1, 'RST_08_shouldThrowNFE_findAll')
+data.setCell(8, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(8, 3, 3);
+data.setCell(9, 0, 9)
+data.setCell(9, 1, 'RST_10_shouldThrowNFE_getResourceEntityById')
+data.setCell(9, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(9, 3, 2);
+data.setCell(10, 0, 10)
+data.setCell(10, 1, 'RST_9_shouldSuccess_findAll')
+data.setCell(10, 2, 'com.testkit.servicetest.ResourceServiceTest')
+data.setCell(10, 3, 1);
+window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
+return data;
+}
+              </script>
+              <span class="suite-total-time">Total running time: 223 ms</span>
+              <div id="times-div-Default_suite">
+              </div> <!-- times-div-Default_suite -->
+            </div> <!-- times-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="reporter-Default_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Reporter output for Default suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="ignored-methods-Default_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">0 ignored methods</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="chronological-Default_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Methods in chronological order</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.testkit.servicetest.ResourceServiceTest</div> <!-- chronological-class-name -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_01_shouldThrowBRE_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:13 IST 2020), ResourceEntity(registrationDate=Wed Ju...)</span>
+                <span class="method-start">922 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1005 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_02_shouldSuccess_saveResource(ResourceInDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed Ju...)</span>
+                <span class="method-start">1006 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1014 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError(202, null)</span>
+                <span class="method-start">1017 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1130 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_04_shouldThrow_BRE_UpdateResource_BadRequestError(ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceEntity(registrationDate=Wed J...)</span>
+                <span class="method-start">1131 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1137 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_05_ShouldRunSuccess_UpdateResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020), ResourceDTO(registrationDate=Wed J...)</span>
+                <span class="method-start">1138 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1147 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_06_shouldThrowNFE_deleteResource(101)</span>
+                <span class="method-start">1149 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1155 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_07_shouldSuccess_deleteResource(1, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))</span>
+                <span class="method-start">1156 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1173 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_08_shouldThrowNFE_findAll</span>
+                <span class="method-start">1174 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1178 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_10_shouldThrowNFE_getResourceEntityById</span>
+                <span class="method-start">1179 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1183 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_11_shouldSuccess_getResourceEntityById(2, ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020))</span>
+                <span class="method-start">1184 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">1193 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">RST_9_shouldSuccess_findAll([ResourceEntity(registrationDate=null), ResourceEntity(registrationDate=null)])</span>
+                <span class="method-start">1194 ms</span>
+              </div> <!-- test-method -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+      </div> <!-- main-panel-root -->
+    </div> <!-- wrapper -->
+  </body>
+<script type="text/javascript" src="testng-reports2.js"></script>
+</html>

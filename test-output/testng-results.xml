@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="11" passed="11">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="1249" started-at="2020-06-24T18:12:13 IST" finished-at="2020-06-24T18:12:14 IST">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="1249" started-at="2020-06-24T18:12:13 IST" finished-at="2020-06-24T18:12:14 IST">
+      <class name="com.testkit.servicetest.ResourceServiceTest">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="921" started-at="2020-06-24T18:12:13 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_01_shouldThrowBRE_saveResource(com.testkit.build.dto.ResourceInDTO, com.testkit.build.entity.ResourceEntity)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_01_shouldThrowBRE_saveResource" duration-ms="72" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForSaveBadRequestException" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ResourceInDTO(registrationDate=Wed Jun 24 18:12:13 IST 2020)]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ResourceEntity(registrationDate=Wed Jun 24 18:12:13 IST 2020)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_01_shouldThrowBRE_saveResource -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_02_shouldSuccess_saveResource(com.testkit.build.dto.ResourceInDTO, com.testkit.build.entity.ResourceEntity, com.testkit.build.dto.ResourceDTO)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_02_shouldSuccess_saveResource" duration-ms="5" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForSaveSuccess" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ResourceInDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[ResourceDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_02_shouldSuccess_saveResource -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="2" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError(int, com.testkit.build.entity.ResourceEntity)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError" duration-ms="110" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForUpdateResourceNotFoundException" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[202]]>
+              </value>
+            </param>
+            <param index="1">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_03_shouldThrow_NFE_UpdateResource_userNotfoundError -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_04_shouldThrow_BRE_UpdateResource_BadRequestError(com.testkit.build.entity.ResourceEntity, com.testkit.build.entity.ResourceEntity)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_04_shouldThrow_BRE_UpdateResource_BadRequestError" duration-ms="3" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForUpdateResourceBadRequestException" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_04_shouldThrow_BRE_UpdateResource_BadRequestError -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_05_ShouldRunSuccess_UpdateResource(int, com.testkit.build.entity.ResourceEntity, com.testkit.build.dto.ResourceDTO)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_05_ShouldRunSuccess_UpdateResource" duration-ms="4" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForUpdateResourceSuccess" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[ResourceDTO(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_05_ShouldRunSuccess_UpdateResource -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="2" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_06_shouldThrowNFE_deleteResource(int)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_06_shouldThrowNFE_deleteResource" duration-ms="3" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForDeleteResourceNotFoundExceptino" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[101]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_06_shouldThrowNFE_deleteResource -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_07_shouldSuccess_deleteResource(int, com.testkit.build.entity.ResourceEntity)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_07_shouldSuccess_deleteResource" duration-ms="16" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForDeleteResourceSuccess" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_07_shouldSuccess_deleteResource -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_08_shouldThrowNFE_findAll()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_08_shouldThrowNFE_findAll" duration-ms="3" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_08_shouldThrowNFE_findAll -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_10_shouldThrowNFE_getResourceEntityById()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_10_shouldThrowNFE_getResourceEntityById" duration-ms="2" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_10_shouldThrowNFE_getResourceEntityById -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_11_shouldSuccess_getResourceEntityById(int, com.testkit.build.entity.ResourceEntity)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_11_shouldSuccess_getResourceEntityById" duration-ms="4" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForFindByIdSuccess" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ResourceEntity(registrationDate=Wed Jun 24 18:12:14 IST 2020)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_11_shouldSuccess_getResourceEntityById -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="setUp" is-config="true" duration-ms="1" started-at="2020-06-24T18:12:14 IST" finished-at="2020-06-24T18:12:14 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="RST_9_shouldSuccess_findAll(java.util.List)[pri:0, instance:com.testkit.servicetest.ResourceServiceTest@5ed828d]" name="RST_9_shouldSuccess_findAll" duration-ms="1" started-at="2020-06-24T18:12:14 IST" data-provider="getDataForFindAllSuccess" finished-at="2020-06-24T18:12:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[ResourceEntity(registrationDate=null), ResourceEntity(registrationDate=null)]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RST_9_shouldSuccess_findAll -->
+      </class> <!-- com.testkit.servicetest.ResourceServiceTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

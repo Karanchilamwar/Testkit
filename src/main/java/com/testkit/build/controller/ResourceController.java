@@ -33,8 +33,8 @@ public class ResourceController {
 		return service.findAll();
 	}
 
-	@PutMapping(value = "/updatecandidate/{userId}")
-	public ResourceDTO updateAdmin(@RequestBody ResourceInDTO resourceInDTO, @PathVariable int userId) {
+	@PutMapping(value = "/update/{userId}")
+	public ResourceDTO updateResource(@RequestBody ResourceInDTO resourceInDTO, @PathVariable int userId) {
 		return service.updateResource(userId, resourceInDTO);
 	}
 
