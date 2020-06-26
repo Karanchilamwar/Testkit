@@ -10,13 +10,13 @@ import com.testkit.build.entity.QuestionEntity;
 
 public interface OptionService {
 
-	List<OptionEntity> saveOptions(List<OptionInDTO> optionInDTOs, QuestionEntity questionEntity);
+	List<OptionEntity> save(List<OptionInDTO> optionInDTOs, QuestionEntity questionEntity);
 
-	List<OptionEntity> updateOptions(List<OptionUpdateDTO> optionUpdateDTOs, QuestionEntity questionEntity);
+	List<OptionEntity> update(List<OptionUpdateDTO> optionUpdateDTOs, QuestionEntity questionEntity);
 
-	List<OptionDTO> getOptionsByQuestionEntity(int questionId);
+	List<OptionDTO> getByQuestionEntity(int questionId);
 
-	void deleteOptions(List<OptionEntity> optionEntityList);
+	void delete(List<OptionEntity> optionEntityList);
 
-	boolean deleteOption(int optionid);
+	boolean delete(int optionid);
 }

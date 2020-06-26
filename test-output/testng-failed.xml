@@ -5,8 +5,8 @@
     <classes>
       <class name="com.testkit.servicetest.ResourceServiceTest">
         <methods>
-          <include name="RST_07_shouldThrowPEE_deleteResource" invocation-numbers="0"/>
           <include name="setUp"/>
+          <include name="RST_07_shouldSuccess_deleteResource" invocation-numbers="0"/>
         </methods>
       </class> <!-- com.testkit.servicetest.ResourceServiceTest -->
     </classes>

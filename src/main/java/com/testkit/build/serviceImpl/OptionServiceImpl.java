@@ -37,7 +37,7 @@ public class OptionServiceImpl implements OptionService {
 	QuestionServiceImpl questionService;
 
 	@Override
-	public List<OptionEntity> saveOptions(List<OptionInDTO> optionInDTOs, QuestionEntity questionEntity) {
+	public List<OptionEntity> save(List<OptionInDTO> optionInDTOs, QuestionEntity questionEntity) {
 		List<OptionEntity> optionEntities = new ArrayList<OptionEntity>();
 		validateOption(optionInDTOs, questionEntity);
 		for (OptionInDTO optionInDTO : optionInDTOs) {
@@ -49,7 +49,7 @@ public class OptionServiceImpl implements OptionService {
 	}
 
 	@Override
-	public List<OptionEntity> updateOptions(List<OptionUpdateDTO> optionUpdateDTOs, QuestionEntity questionEntity) {
+	public List<OptionEntity> update(List<OptionUpdateDTO> optionUpdateDTOs, QuestionEntity questionEntity) {
 		List<OptionEntity> existingOptionEntities = questionEntity.getOptionEntityList();
 		OptionEntity optionEntity = null;
 
@@ -77,7 +77,7 @@ public class OptionServiceImpl implements OptionService {
 	}
 
 	@Override
-	public List<OptionDTO> getOptionsByQuestionEntity(int questionId) {
+	public List<OptionDTO> getByQuestionEntity(int questionId) {
 		List<OptionDTO> optionDTOs = new ArrayList<OptionDTO>();
 		List<Optional<OptionEntity>> optionalsOptionList = optionRepository.findByQuestionId(questionId);
 		if (!optionalsOptionList.isEmpty()) {
@@ -96,7 +96,7 @@ public class OptionServiceImpl implements OptionService {
 	}
 
 	@Override
-	public boolean deleteOption(int optionId) {
+	public boolean delete(int optionId) {
 		if (findOptionEntityById(optionId) != null) {
 			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.OPTIONS_NOT_FOUND,
@@ -107,7 +107,7 @@ public class OptionServiceImpl implements OptionService {
 	}
 
 	@Override
-	public void deleteOptions(List<OptionEntity> optionEntityList) {
+	public void delete(List<OptionEntity> optionEntityList) {
 		optionRepository.deleteAll(optionEntityList);
 	}
 

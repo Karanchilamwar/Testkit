@@ -14,33 +14,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testkit.build.dto.CandidateDTO;
 import com.testkit.build.dto.CandidateInDTO;
-import com.testkit.build.services.CandidateService;
+import com.testkit.build.serviceImpl.CandidateServiceImpl;
 
 @RestController()
-@RequestMapping(value = "/candidate")
+@RequestMapping(value = "/candidates")
 public class CandidateController {
 
 	@Autowired
-	CandidateService service;
+	CandidateServiceImpl service;
 
-	@PostMapping(value = "/addcandidate")
+	@PostMapping
 	public CandidateDTO addUser(@RequestBody CandidateInDTO candidateIndto) {
-		return service.saveCandidate(candidateIndto);
+		return service.save(candidateIndto);
 	}
 
-	@GetMapping(value = "/getcandidate")
-	public List<CandidateDTO> getCandidate() {
+	@GetMapping
+	public List<CandidateDTO> getCandidates() {
 		return service.findAll();
 	}
 
-	@PutMapping(value = "/updatecandidate/{userId}")
+	@GetMapping(value = "/{candidateId}")
+	public CandidateDTO getCandidate(@PathVariable int candidateId) {
+		return service.findById(candidateId);
+	}
+
+	@PutMapping(value = "/{userId}")
 	public CandidateDTO updateAdmin(@RequestBody CandidateInDTO candidateInDTO, @PathVariable int userId) {
-		return service.updateCandidate(userId, candidateInDTO);
+		return service.update(userId, candidateInDTO);
 	}
 
 	@DeleteMapping(value = "{userId}")
 	public boolean deleteCandidate(@PathVariable int userId) {
-		return service.deleteCandidate(userId);
+		return service.delete(userId);
 	}
 
 }

@@ -7,11 +7,13 @@ import com.testkit.build.dto.AdminInDTO;
 
 public interface AdminService {
 
-	AdminDTO saveAdmin(AdminInDTO adminInDTO);
+	AdminDTO save(AdminInDTO adminInDTO);
 
 	List<AdminDTO> findAll();
 
-	AdminDTO updateAdmin(int userId, AdminInDTO adminInDTO);
+	AdminDTO findById(int adminId);
 
-	boolean deleteAdmin(int userid);
+	AdminDTO update(int userId, AdminInDTO adminInDTO);
+
+	boolean delete(int userid);
 }

@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService {
 	AdminMapper mapper;
 
 	@Override
-	public AdminDTO saveAdmin(AdminInDTO adminInDTO) {
+	public AdminDTO save(AdminInDTO adminInDTO) {
 		validateAdmin(adminInDTO);
 		return this.createAdminDTO(adminRepository.save(this.createAdminEntity(adminInDTO)));
 	}
@@ -52,8 +52,30 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public AdminDTO updateAdmin(int userId, AdminInDTO adminInDTO) {
+	public AdminDTO update(int userId, AdminInDTO adminInDTO) {
 		AdminEntity adminEntity = null;
+		adminEntity = find(userId);
+		adminEntity = updateAdminEntity(adminInDTO, adminEntity);
+		adminEntity = adminRepository.save(adminEntity);
+
+		return this.createAdminDTO(adminEntity);
+
+	}
+
+	@Override
+	public AdminDTO findById(int adminId) {
+		return createAdminDTO(this.find(adminId));
+	}
+
+	@Override
+	public boolean delete(int userid) {
+		findAdminEntityById(userid);
+		adminRepository.deleteById(userid);
+		return true;
+	}
+
+	private AdminEntity find(int userId) {
+		AdminEntity adminEntity;
 		Optional<AdminEntity> optionalAdminEntity = adminRepository.findById(userId);
 
 		if (!optionalAdminEntity.isPresent()) {
@@ -63,18 +85,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 
 		adminEntity = optionalAdminEntity.get();
-		adminEntity = updateAdminEntity(adminInDTO, adminEntity);
-		adminEntity = adminRepository.save(adminEntity);
-
-		return this.createAdminDTO(adminEntity);
-
-	}
-
-	@Override
-	public boolean deleteAdmin(int userid) {
-		findAdminEntityById(userid);
-		adminRepository.deleteById(userid);
-		return true;
+		return adminEntity;
 	}
 
 	private AdminEntity findAdminEntityById(int userId) {

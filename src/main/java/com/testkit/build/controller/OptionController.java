@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.testkit.build.serviceImpl.OptionServiceImpl;
 
 @RestController
-@RequestMapping("/option")
+@RequestMapping("/options")
 public class OptionController {
 
 	@Autowired
 	OptionServiceImpl optionService;
 
-	@DeleteMapping(value = "{userId}")
+	@DeleteMapping(value = "{optionId}")
 	public boolean deleteOption(@PathVariable int optionId) {
-		return optionService.deleteOption(optionId);
+		return optionService.delete(optionId);
 	}
 }

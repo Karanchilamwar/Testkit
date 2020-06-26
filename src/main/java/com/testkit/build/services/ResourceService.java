@@ -4,17 +4,16 @@ import java.util.List;
 
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
-import com.testkit.build.entity.ResourceEntity;
 
 public interface ResourceService {
 
-	ResourceDTO saveResource(ResourceInDTO resourceInDTO);
+	ResourceDTO save(ResourceInDTO resourceInDTO);
 
 	List<ResourceDTO> findAll();
 
-	ResourceDTO updateResource(int userId, ResourceInDTO resourceInDTO);
+	ResourceDTO update(int userId, ResourceInDTO resourceInDTO);
 
-	boolean deleteResource(int userid);
+	boolean delete(int userid);
 
-	ResourceEntity getResourceEntityById(int userId);
+	ResourceDTO findById(int userId);
 }

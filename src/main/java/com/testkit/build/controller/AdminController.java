@@ -3,7 +3,6 @@ package com.testkit.build.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,32 +13,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testkit.build.dto.AdminDTO;
 import com.testkit.build.dto.AdminInDTO;
-import com.testkit.build.services.AdminService;
+import com.testkit.build.serviceImpl.AdminServiceImpl;
 
 @RestController()
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admins")
 public class AdminController {
 
 	@Autowired
-	AdminService service;
+	AdminServiceImpl service;
 
-	@PostMapping(value = "/addadmin")
+	@PostMapping
 	public AdminDTO addUser(@RequestBody AdminInDTO adminIndto) {
-		return service.saveAdmin(adminIndto);
+		return service.save(adminIndto);
 	}
 
-	@GetMapping(value = "/getadmin")
+	@GetMapping
 	public List<AdminDTO> getAdmin() {
 		return service.findAll();
 	}
 
-	@PutMapping(value = "/updateadmin/{userId}")
-	public AdminDTO updateAdmin(@RequestBody AdminInDTO adminInDTO, @PathVariable int userId) {
-		return service.updateAdmin(userId, adminInDTO);
+	@GetMapping(value = "/{adminId}")
+	public AdminDTO getAdmin(@PathVariable int adminId) {
+		return service.findById(adminId);
 	}
 
-	@DeleteMapping(value = "{userId}")
-	public boolean deleteAdmin(@PathVariable int userId) {
-		return service.deleteAdmin(userId);
+	@PutMapping(value = "/{userId}")
+	public AdminDTO updateAdmin(@RequestBody AdminInDTO adminInDTO, @PathVariable int userId) {
+		return service.update(userId, adminInDTO);
 	}
 }

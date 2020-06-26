@@ -14,33 +14,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testkit.build.dto.ResourceDTO;
 import com.testkit.build.dto.ResourceInDTO;
-import com.testkit.build.services.ResourceService;
+import com.testkit.build.serviceImpl.ResourceServiceImpl;
 
 @RestController()
-@RequestMapping(value = "/resource")
+@RequestMapping(value = "/resources")
 public class ResourceController {
 
 	@Autowired
-	ResourceService service;
+	ResourceServiceImpl service;
 
-	@PostMapping(value = "/addresource")
+	@PostMapping
 	public ResourceDTO addResource(@RequestBody ResourceInDTO candidateIndto) {
-		return service.saveResource(candidateIndto);
+		return service.save(candidateIndto);
 	}
 
-	@GetMapping(value = "/getresource")
+	@GetMapping
 	public List<ResourceDTO> getResource() {
 		return service.findAll();
 	}
 
-	@PutMapping(value = "/update/{userId}")
-	public ResourceDTO updateResource(@RequestBody ResourceInDTO resourceInDTO, @PathVariable int userId) {
-		return service.updateResource(userId, resourceInDTO);
+	@GetMapping(value = "/{resourceId}")
+	public ResourceDTO getResource(@PathVariable int resourceId) {
+		return service.findById(resourceId);
 	}
 
-	@DeleteMapping(value = "{questionId}")
+	@PutMapping(value = "/{resourceId}")
+	public ResourceDTO updateResource(@PathVariable int resourceId, @RequestBody ResourceInDTO resourceInDTO) {
+		return service.update(resourceId, resourceInDTO);
+	}
+
+	@DeleteMapping(value = "/{resourceId}")
 	public boolean deleteResource(@PathVariable int resourceId) {
-		return service.deleteResource(resourceId);
+		return service.delete(resourceId);
 	}
 
 }

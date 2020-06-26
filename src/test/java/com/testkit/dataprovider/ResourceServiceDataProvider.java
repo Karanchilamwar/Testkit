@@ -161,7 +161,16 @@ public class ResourceServiceDataProvider {
 		outputResourceEntity.setUserMobile("123456789");
 		outputResourceEntity.setUserName("abc");
 		outputResourceEntity.setUserPassword("password");
-		return new Object[][] { { 2, outputResourceEntity } };
+
+		ResourceDTO resourceDTO = new ResourceDTO();
+		resourceDTO.setRegistrationDate(new Date());
+		resourceDTO.setId(2);
+		resourceDTO.setUserEmail("abc@gmail.com");
+		resourceDTO.setUserMobile("123456789");
+		resourceDTO.setUserName("abc");
+		resourceDTO.setUserPassword("password");
+
+		return new Object[][] { { 2, outputResourceEntity, resourceDTO } };
 
 	}
 }

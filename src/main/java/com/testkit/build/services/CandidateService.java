@@ -7,11 +7,13 @@ import com.testkit.build.dto.CandidateInDTO;
 
 public interface CandidateService {
 
-	CandidateDTO saveCandidate(CandidateInDTO candidateInDTO);
+	CandidateDTO save(CandidateInDTO candidateInDTO);
 
 	List<CandidateDTO> findAll();
 
-	CandidateDTO updateCandidate(int userId, CandidateInDTO candidateInDTO);
+	CandidateDTO findById(int candidateId);
 
-	boolean deleteCandidate(int userid);
+	CandidateDTO update(int userId, CandidateInDTO candidateInDTO);
+
+	boolean delete(int userid);
 }

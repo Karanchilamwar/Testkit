@@ -57,7 +57,7 @@ public class ResourceServiceTest {
 				resourceInDTO.getUserMobile())).thenReturn(outResourceEntity);
 
 		try {
-			resourceService.saveResource(resourceInDTO);
+			resourceService.save(resourceInDTO);
 			fail("Bab request exception should throw");
 		} catch (BadRequestException badRequest) {
 			assertEquals(badRequest.getErrorMessage().getCode(), ErrorCode.BAD_REQUEST.getCode());
@@ -77,7 +77,7 @@ public class ResourceServiceTest {
 
 		when(resourceRepository.save(outResourceEntity)).thenReturn(outResourceEntity);
 
-		ResourceDTO resourceDTO2 = resourceService.saveResource(resourceInDTO);
+		ResourceDTO resourceDTO2 = resourceService.save(resourceInDTO);
 		assertEquals(resourceDTO2, ExpeResourceDTO);
 	}
 
@@ -87,7 +87,7 @@ public class ResourceServiceTest {
 		when(resourceRepository.findOne(resourcePredicate.userIdEq(userId)))
 				.thenReturn(Optional.ofNullable(resourceEntity));
 		try {
-			resourceService.updateResource(userId, null);
+			resourceService.update(userId, null);
 			fail("should throw Not found Exception");
 		} catch (NotFoundException notFoundException) {
 			assertEquals(notFoundException.getErrorMessage().getCode(), ErrorCode.NOT_FOUND_EXCEPTION.getCode());
@@ -99,8 +99,7 @@ public class ResourceServiceTest {
 	public void RST_04_shouldThrow_BRE_UpdateResource_BadRequestError(ResourceEntity inResourceEntity,
 			ResourceEntity outResourceEntity) {
 
-		when(resourceRepository.findOne(resourcePredicate.userIdEq(inResourceEntity.getId())))
-				.thenReturn(Optional.of(inResourceEntity));
+		when(resourceRepository.findById(inResourceEntity.getId())).thenReturn(Optional.of(inResourceEntity));
 
 		when(mapper.resourceInDTOToResourceEntity(null, inResourceEntity)).thenReturn(inResourceEntity);
 
@@ -108,7 +107,7 @@ public class ResourceServiceTest {
 				.thenReturn(Optional.of(outResourceEntity));
 
 		try {
-			resourceService.updateResource(1, null);
+			resourceService.update(1, null);
 			fail("should throw bad request Exception");
 		} catch (BadRequestException badRequestException) {
 			assertEquals(badRequestException.getErrorMessage().getCode(), ErrorCode.BAD_REQUEST.getCode());
@@ -119,7 +118,7 @@ public class ResourceServiceTest {
 	@Test(dataProvider = "getDataForUpdateResourceSuccess", dataProviderClass = ResourceServiceDataProvider.class)
 	public void RST_05_ShouldRunSuccess_UpdateResource(int id, ResourceEntity resourceEntity, ResourceDTO resourceDTO) {
 
-		when(resourceRepository.findOne(resourcePredicate.userIdEq(id))).thenReturn(Optional.of(resourceEntity));
+		when(resourceRepository.findById(id)).thenReturn(Optional.of(resourceEntity));
 
 		when(mapper.resourceInDTOToResourceEntity(null, resourceEntity)).thenReturn(resourceEntity);
 
@@ -130,7 +129,7 @@ public class ResourceServiceTest {
 
 		when(mapper.ResourceEntityTOResourceDTO(resourceEntity)).thenReturn(resourceDTO);
 
-		ResourceDTO resourceDTO2 = resourceService.updateResource(id, null);
+		ResourceDTO resourceDTO2 = resourceService.update(id, null);
 
 		assertEquals(resourceDTO2, resourceDTO);
 
@@ -138,9 +137,9 @@ public class ResourceServiceTest {
 
 	@Test(dataProvider = "getDataForDeleteResourceNotFoundExceptino", dataProviderClass = ResourceServiceDataProvider.class)
 	public void RST_06_shouldThrowNFE_deleteResource(int userId) {
-		when(resourceRepository.findOne(ResourcePredicate.userIdEq(userId))).thenReturn(Optional.empty());
+		when(resourceRepository.findById(userId)).thenReturn(Optional.empty());
 		try {
-			resourceService.deleteResource(userId);
+			resourceService.delete(userId);
 			fail("Not Found exception should throw");
 		} catch (NotFoundException notFoundException) {
 			assertEquals(notFoundException.getErrorMessage().getCode(), ErrorCode.NOT_FOUND_EXCEPTION.getCode());
@@ -149,8 +148,8 @@ public class ResourceServiceTest {
 
 	@Test(dataProvider = "getDataForDeleteResourceSuccess", dataProviderClass = ResourceServiceDataProvider.class)
 	public void RST_07_shouldSuccess_deleteResource(int userId, ResourceEntity resourceEntity) {
-		when(resourceRepository.findOne(ResourcePredicate.userIdEq(userId))).thenReturn(Optional.of(resourceEntity));
-		boolean result = resourceService.deleteResource(userId);
+		when(resourceRepository.findById(userId)).thenReturn(Optional.of(resourceEntity));
+		boolean result = resourceService.delete(userId);
 		Mockito.verify(resourceRepository, times(1)).deleteById(userId);
 	}
 
@@ -180,7 +179,7 @@ public class ResourceServiceTest {
 	public void RST_10_shouldThrowNFE_getResourceEntityById() {
 		when(resourceRepository.findById(1001)).thenReturn(Optional.empty());
 		try {
-			resourceService.getResourceEntityById(1001);
+			resourceService.findById(1001);
 			fail("should throw Not found Exception");
 		} catch (NotFoundException notFoundException) {
 			assertEquals(notFoundException.getErrorMessage().getCode(), ErrorCode.NOT_FOUND_EXCEPTION.getCode());
@@ -189,12 +188,16 @@ public class ResourceServiceTest {
 	}
 
 	@Test(dataProvider = "getDataForFindByIdSuccess", dataProviderClass = ResourceServiceDataProvider.class)
-	public void RST_11_shouldSuccess_getResourceEntityById(int userID, ResourceEntity resourceEntity) {
-		when(resourceRepository.findOne(ResourcePredicate.userIdEq(userID))).thenReturn(Optional.of(resourceEntity));
+	public void RST_11_shouldSuccess_getResourceEntityById(int userID, ResourceEntity resourceEntity,
+			ResourceDTO resourceDTO) {
 
-		ResourceEntity resourceEntityResult = resourceService.getResourceEntityById(userID);
+		when(resourceRepository.findById(userID)).thenReturn(Optional.of(resourceEntity));
 
-		assertEquals(resourceEntityResult.getId(), userID);
+		when(mapper.ResourceEntityTOResourceDTO(resourceEntity)).thenReturn(resourceDTO);
+
+		ResourceDTO actualResourceDTO = resourceService.findById(userID);
+
+		assertEquals(actualResourceDTO.getId(), userID);
 
 	}
 

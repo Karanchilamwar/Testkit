@@ -33,7 +33,7 @@ public class CandidateServiceImpl implements CandidateService {
 	CandidateMapper mapper;
 
 	@Override
-	public CandidateDTO saveCandidate(CandidateInDTO candidateInDTO) {
+	public CandidateDTO save(CandidateInDTO candidateInDTO) {
 
 		validateCandidate(candidateInDTO);
 		return this.createCandidateDTO(candidateRepository.save(this.createCandidateEntity(candidateInDTO)));
@@ -52,9 +52,29 @@ public class CandidateServiceImpl implements CandidateService {
 	}
 
 	@Override
-	public CandidateDTO updateCandidate(int userId, CandidateInDTO candidateInDTO) {
+	public CandidateDTO update(int userId, CandidateInDTO candidateInDTO) {
 		CandidateDTO candidateDTO = null;
 
+		CandidateEntity candidateEntity = find(userId);
+		candidateEntity = updateCandidateEntity(candidateInDTO, candidateEntity);
+		candidateDTO = createCandidateDTO(candidateRepository.save(candidateEntity));
+
+		return candidateDTO;
+	}
+
+	@Override
+	public boolean delete(int userid) {
+		getCandidateEntityById(userid);
+		candidateRepository.deleteById(userid);
+		return true;
+	}
+
+	@Override
+	public CandidateDTO findById(int candidateId) {
+		return createCandidateDTO(this.find(candidateId));
+	}
+
+	private CandidateEntity find(int userId) {
 		Optional<CandidateEntity> optionalCandidateEntity = candidateRepository.findById(userId);
 
 		if (!optionalCandidateEntity.isPresent()) {
@@ -63,17 +83,7 @@ public class CandidateServiceImpl implements CandidateService {
 							"No user available in the database with ID{" + userId + "}")));
 		}
 		CandidateEntity candidateEntity = optionalCandidateEntity.get();
-		candidateEntity = updateCandidateEntity(candidateInDTO, candidateEntity);
-		candidateDTO = createCandidateDTO(candidateRepository.save(candidateEntity));
-
-		return candidateDTO;
-	}
-
-	@Override
-	public boolean deleteCandidate(int userid) {
-		getCandidateEntityById(userid);
-		candidateRepository.deleteById(userid);
-		return true;
+		return candidateEntity;
 	}
 
 	private List<CandidateDTO> createCandidateDTOS(List<CandidateEntity> list) {

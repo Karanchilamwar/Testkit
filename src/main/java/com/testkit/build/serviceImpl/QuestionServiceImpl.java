@@ -39,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
 	OptionServiceImpl optionService;
 
 	@Override
-	public QuestionDTO saveQuestion(QuestionInDTO questionInDTO) {
+	public QuestionDTO save(QuestionInDTO questionInDTO) {
 		validateQuestion(questionInDTO);
 		QuestionEntity questionEntity = createQuestionEntity(questionInDTO);
 		questionEntity = questionRepository.save(questionEntity);
@@ -48,16 +48,9 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public QuestionDTO updateQuestion(QuestionUpdateDTO questionUpdateDTO) {
+	public QuestionDTO update(int questionId, QuestionUpdateDTO questionUpdateDTO) {
 		QuestionDTO questionDTO = null;
-		Optional<QuestionEntity> optionalQuestionEntity = questionRepository.findById(questionUpdateDTO.getId());
-		if (!optionalQuestionEntity.isPresent()) {
-			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
-							"No Question available in the database with ID{" + questionUpdateDTO.getId() + "}")));
-		}
-
-		QuestionEntity questionEntity = optionalQuestionEntity.get();
+		QuestionEntity questionEntity = find(questionId);
 		questionEntity = this.updateQuestionEntity(questionUpdateDTO, questionEntity);
 		questionEntity = questionRepository.save(questionEntity);
 		questionEntity.setOptionEntityList(updateOptionEntity(questionUpdateDTO.getOptionUpdateDTOs(), questionEntity));
@@ -67,7 +60,7 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public List<QuestionDTO> findQuestions() {
+	public List<QuestionDTO> find() {
 		List<QuestionEntity> questionEntityList = new ArrayList<QuestionEntity>();
 		questionRepository.findAll().forEach(questionEntityList::add);
 		if (questionEntityList.isEmpty()) {
@@ -79,27 +72,27 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public QuestionDTO findQuestionById(int questionId) {
-		QuestionDTO questionDTO = null;
-		Optional<QuestionEntity> optionalQuestionEntity = questionRepository.findById(questionId);
-		if (optionalQuestionEntity.isPresent()) {
-			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
-					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
-							"No Question available in the database with ID{" + questionId + "}")));
-		}
-		questionDTO = createQuestionDTO(optionalQuestionEntity.get());
-		return questionDTO;
+	public QuestionDTO findById(int questionId) {
+		return createQuestionDTO(this.find(questionId));
 	}
 
 	@Override
-	public boolean deleteQuestion(int questionId) {
-		if (findQuestionById(questionId) != null) {
+	public boolean delete(int questionId) {
+		find(questionId);
+		questionRepository.deleteById(questionId);
+		return true;
+	}
+
+	private QuestionEntity find(int questionId) {
+		Optional<QuestionEntity> optionalQuestionEntity = questionRepository.findById(questionId);
+		if (!optionalQuestionEntity.isPresent()) {
 			throw new NotFoundException(new ErrorMessage(ErrorCode.NOT_FOUND_EXCEPTION)
 					.addDeveloperMessage(new DeveloperMessage(ErrorCode.QUESTION_NOT_FOUND,
 							"No Question available in the database with ID{" + questionId + "}")));
 		}
-		questionRepository.deleteById(questionId);
-		return true;
+
+		QuestionEntity questionEntity = optionalQuestionEntity.get();
+		return questionEntity;
 	}
 
 	private QuestionEntity createQuestionEntity(QuestionInDTO questionInDTO) {
@@ -117,11 +110,11 @@ public class QuestionServiceImpl implements QuestionService {
 
 	private List<OptionEntity> updateOptionEntity(List<OptionUpdateDTO> optionUpdateDTOs,
 			QuestionEntity questionEntity) {
-		return optionService.updateOptions(optionUpdateDTOs, questionEntity);
+		return optionService.update(optionUpdateDTOs, questionEntity);
 	}
 
 	private List<OptionEntity> saveOptionsEntity(QuestionInDTO questionInDTO, QuestionEntity questionEntity) {
-		return optionService.saveOptions(questionInDTO.getOptionInDTOList(), questionEntity);
+		return optionService.save(questionInDTO.getOptionInDTOList(), questionEntity);
 	}
 
 	private QuestionEntity updateQuestionEntity(QuestionUpdateDTO questionUpdateDTO, QuestionEntity questionEntity) {

@@ -6,51 +6,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.testkit.build.dao.QuestionRepository;
 import com.testkit.build.dto.QuestionDTO;
 import com.testkit.build.dto.QuestionInDTO;
 import com.testkit.build.dto.QuestionUpdateDTO;
 import com.testkit.build.serviceImpl.QuestionServiceImpl;
 
 @RestController
-@RequestMapping(value = "question")
+@RequestMapping(value = "questions")
 public class QuestionController {
 
 	@Autowired
 	QuestionServiceImpl questionService;
 
-	@Autowired
-	QuestionRepository questionRepository;
+	@GetMapping
+	public List<QuestionDTO> get() {
 
-	@RequestMapping("/getquestion")
-	public List<QuestionDTO> getQuestionList() {
-
-		return questionService.findQuestions();
+		return questionService.find();
 	}
 
-	@RequestMapping("/savequestion")
-	public QuestionDTO saveQuestion(@RequestBody QuestionInDTO questionInDTO) {
-		return questionService.saveQuestion(questionInDTO);
+	@PostMapping
+	public QuestionDTO save(@RequestBody QuestionInDTO questionInDTO) {
+		return questionService.save(questionInDTO);
 	}
 
-	@PutMapping("/updatequestion/")
-	public QuestionDTO updateQuestion(@RequestBody QuestionUpdateDTO questionUpdateDTO) {
-		return questionService.updateQuestion(questionUpdateDTO);
+	@PutMapping("/{questionId}")
+	public QuestionDTO update(@PathVariable int questionId, @RequestBody QuestionUpdateDTO questionUpdateDTO) {
+		return questionService.update(questionId, questionUpdateDTO);
 	}
 
-	@GetMapping("/getquestion/{questionId}")
+	@GetMapping("/{questionId}")
 	public QuestionDTO getQUestion(@PathVariable int questionId) {
-		return questionService.findQuestionById(questionId);
+		return questionService.findById(questionId);
 	}
 
 	@DeleteMapping(value = "{questionId}")
 	public boolean deleteQuestion(@PathVariable int questionId) {
-		return questionService.deleteQuestion(questionId);
+		return questionService.delete(questionId);
 	}
 
 }

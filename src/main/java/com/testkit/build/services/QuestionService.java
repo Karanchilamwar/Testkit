@@ -8,13 +8,13 @@ import com.testkit.build.dto.QuestionUpdateDTO;
 
 public interface QuestionService {
 
-	QuestionDTO saveQuestion(QuestionInDTO questionInDTO);
+	QuestionDTO save(QuestionInDTO questionInDTO);
 
-	QuestionDTO updateQuestion(QuestionUpdateDTO questionUpdateDTO);
+	QuestionDTO update(int questionId, QuestionUpdateDTO questionUpdateDTO);
 
-	List<QuestionDTO> findQuestions();
+	List<QuestionDTO> find();
 
-	QuestionDTO findQuestionById(int questionId);
+	QuestionDTO findById(int questionId);
 
-	boolean deleteQuestion(int questionid);
+	boolean delete(int questionid);
 }

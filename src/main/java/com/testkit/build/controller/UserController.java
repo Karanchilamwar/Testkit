@@ -11,13 +11,13 @@ import com.testkit.build.entity.UserEntity;
 import com.testkit.build.services.UserService;
 
 @RestController()
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
 
 	@Autowired
 	UserService service;
 
-	@GetMapping(value = "/getuser")
+	@GetMapping
 	public List<UserEntity> getAdmin() {
 		return service.findAll();
 	}

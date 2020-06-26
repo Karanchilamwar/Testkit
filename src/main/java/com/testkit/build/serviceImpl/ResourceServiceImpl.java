@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.testkit.build.common.dto.DeveloperMessage;
 import com.testkit.build.common.dto.ErrorMessage;
 import com.testkit.build.common.enums.ErrorCode;
@@ -34,7 +33,7 @@ public class ResourceServiceImpl implements ResourceService {
 	ResourceMapper mapper;
 
 	@Override
-	public ResourceDTO saveResource(ResourceInDTO resourceInDTO) {
+	public ResourceDTO save(ResourceInDTO resourceInDTO) {
 		validateResource(resourceInDTO);
 		return this.createResourceDTO(resourceRepository.save(createResourceEntity(resourceInDTO)));
 
@@ -52,8 +51,8 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public ResourceDTO updateResource(int userId, ResourceInDTO resourceInDTO) {
-		ResourceEntity resourceEntity = getResourceEntityById(userId);
+	public ResourceDTO update(int userId, ResourceInDTO resourceInDTO) {
+		ResourceEntity resourceEntity = find(userId);
 		resourceEntity = updateResourceEntity(resourceInDTO, resourceEntity);
 		ValidateResourceForSameEmailOrMobileWithDifferentId(resourceEntity);
 		resourceEntity = resourceRepository.save(resourceEntity);
@@ -61,18 +60,20 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public boolean deleteResource(int userId) {
-		getResourceEntityById(userId);
+	public boolean delete(int userId) {
+		findById(userId);
 		resourceRepository.deleteById(userId);
-
 		return true;
 	}
 
 	@Override
-	public ResourceEntity getResourceEntityById(int userId) {
+	public ResourceDTO findById(int userId) {
+		return createResourceDTO(find(userId));
+	}
+
+	private ResourceEntity find(int userId) {
 		ResourceEntity resourceEntity = null;
-		BooleanExpression idEquExp = ResourcePredicate.userIdEq(userId);
-		Optional<ResourceEntity> optional = resourceRepository.findOne(idEquExp);
+		Optional<ResourceEntity> optional = resourceRepository.findById(userId);
 		if (optional.isPresent()) {
 			resourceEntity = optional.get();
 		} else {
