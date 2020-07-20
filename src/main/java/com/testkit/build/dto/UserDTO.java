@@ -1,5 +1,7 @@
 package com.testkit.build.dto;
 
+import com.testkit.build.common.enums.UserType;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +20,6 @@ public abstract class UserDTO {
 	private String userPassword;
 
 	private String userMobile;
+
+	private UserType userType;
 }

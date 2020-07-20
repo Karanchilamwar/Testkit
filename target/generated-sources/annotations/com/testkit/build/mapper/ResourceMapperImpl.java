@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-06-26T14:14:16+0530",
+    date = "2020-07-16T11:31:24+0530",
     comments = "version: 1.4.0.Beta1, compiler: Eclipse JDT (IDE) 3.21.0.v20200304-1404, environment: Java 1.8.0_251 (Oracle Corporation)"
 )
 @Component
@@ -45,6 +45,7 @@ public class ResourceMapperImpl implements ResourceMapper {
         resourceDTO.setRegistrationDate( resourceEntity.getRegistrationDate() );
         resourceDTO.setId( resourceEntity.getId() );
         resourceDTO.setUserPassword( resourceEntity.getUserPassword() );
+        resourceDTO.setUserType( resourceEntity.getUserType() );
 
         return resourceDTO;
     }

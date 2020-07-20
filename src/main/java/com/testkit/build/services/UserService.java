@@ -8,4 +8,6 @@ public interface UserService {
 
 	List<UserEntity> findAll();
 
+	UserEntity findById(int id);
+
 }

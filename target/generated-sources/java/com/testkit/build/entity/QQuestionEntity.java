@@ -28,6 +28,8 @@ public class QQuestionEntity extends EntityPathBase<QuestionEntity> {
 
     public final StringPath questionText = createString("questionText");
 
+    public final ListPath<SectionEntity, QSectionEntity> sectionEntities = this.<SectionEntity, QSectionEntity>createList("sectionEntities", SectionEntity.class, QSectionEntity.class, PathInits.DIRECT2);
+
     public final NumberPath<Integer> time = createNumber("time", Integer.class);
 
     public final StringPath type = createString("type");

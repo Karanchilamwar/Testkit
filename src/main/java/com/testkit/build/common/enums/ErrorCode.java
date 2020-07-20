@@ -11,14 +11,25 @@ public enum ErrorCode {
 	USER_DATA_VALIDATION(1002, "Provided user data is not valid"),
 	USER_LOGIN_VALIDATION(1004, "Login denied with given username and password"),
 	USER_DELETION_FAILED(1004, "Deletion did not completed"),
-
+	// Candidate
+	CANDIDATE_NOT_FOUND(10013, "Candidate with email and mobile not found in the database"),
 	// Question controller
 	QUESTION_NOT_FOUND(1005, "Question entity not found"),
 	DUPLICATE_QUESTION_ENTITY(1006, "Question with same Text and Type already in the database"),
 
 	// Option controller
 	OPTIONS_NOT_FOUND(1007, "Option is found"),
-	DUPLICATE_OPTION_ENTITY(1008, "Option for the Question is in the database");
+	DUPLICATE_OPTION_ENTITY(1008, "Option for the Question is in the database"),
+
+	// Test Controller
+	TEST_NAME_EXIST(1009, "Test Name already exists"), TEST_NOT_FOUND(1010, "No Test entities"),
+
+	// Test Controller
+	SECTION_NAME_EXIST(1011, "Section Name already exists"), SECTION_NOT_FOUND(1012, "No Section entities"),
+
+	// Schedule Controller
+	SCHEDULE_ALREADY_EXISTS(1012, "SCHEDULE ALREADY EXISTS"), SCHEDULE_NOT_EXISTS(1013, "SCHEDULE NOT EXISTS"),
+	ANSWERSHEET_NOT_FOUND(1014, "NO ANSWER IN THE DATABASE");
 
 	private int code;
 	private String message;

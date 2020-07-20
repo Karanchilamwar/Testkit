@@ -10,7 +10,7 @@
 <changeSet id="1" author="nit162">
    <createTable tableName="test">
    
-        <column name="id" type="int">
+        <column name="id" type="int" autoIncrement="true">
           <constraints nullable="false"  primaryKey="true"/>
         </column>
         

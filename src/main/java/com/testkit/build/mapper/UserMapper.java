@@ -6,27 +6,4 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface UserMapper {
 
-	/*
-	 * @Mapping(source="userName",target="userName")
-	 * 
-	 * @Mapping(source="userEmail",target="userEmail")
-	 * 
-	 * @Mapping(source="userPassword",target="userPassword")
-	 * 
-	 * @Mapping(source="userMobile",target="userMobile")
-	 * 
-	 * @Mapping(source="id",target="id")
-	 * 
-	 * UserEntity UserInDTOToUserEntity(UserInDTO userInDTO);
-	 * 
-	 * 
-	 * @Mapping(source = "userName", target = "userName")
-	 * 
-	 * @Mapping(source = "userEmail", target = "userEmail")
-	 * 
-	 * @Mapping(source = "userMobile", target = "userMobile")
-	 * 
-	 * UserDTO UserEntityTOUserDTO(UserEntity userEntity);
-	 */
-
 }
